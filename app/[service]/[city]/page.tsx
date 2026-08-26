@@ -6,6 +6,7 @@ import { PageBody, PageHero } from "@/components/ui/PageShell";
 import { CtaBand, FaqList, NearbyZone, Sections } from "@/components/ui/Blocks";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { Cover } from "@/components/ui/Cover";
+import { RepairForm } from "@/components/blocks/RepairForm";
 import { getCity } from "@/data/cities";
 import { getPillar, getService, serviceCityPairs, services } from "@/data/services";
 import { getRegion } from "@/data/regions";
@@ -95,6 +96,7 @@ export default async function ServiceCityPage({ params }: PageProps<"/[service]/
       <PageBody
         service={sv.nav}
         city={ct.name}
+        form={sv.pillar === "reparation" ? <RepairForm defaultCity={ct.name} /> : undefined}
         aside={
           <div className={s.asideZone}>
             <p className={s.asideHead}>Communes couvertes</p>

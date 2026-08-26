@@ -1,4 +1,5 @@
 import type { Service } from "@/lib/types";
+import { repairServices } from "./services-reparation";
 
 /**
  * Registre des pages prestation — source unique de vérité.
@@ -11,7 +12,7 @@ import type { Service } from "@/lib/types";
  * été vérifiées et validées par le client.
  */
 
-export const services: Service[] = [
+const coreServices: Service[] = [
   // ===========================================================================
   // PILIER 1 — NETTOYAGE
   // ===========================================================================
@@ -20,6 +21,7 @@ export const services: Service[] = [
     pillar: "nettoyage",
     isPillar: true,
     nav: "Nettoyage de hotte",
+    navShort: "Nettoyage",
     h1: "Nettoyage de hotte professionnelle",
     title: "Nettoyage de hotte professionnelle | Spécialiste national",
     description:
@@ -419,6 +421,7 @@ export const services: Service[] = [
     pillar: "degraissage",
     isPillar: true,
     nav: "Dégraissage de hotte",
+    navShort: "Dégraissage",
     h1: "Dégraissage de hotte professionnelle",
     title: "Dégraissage de hotte professionnelle | Dépôts durcis & réseau",
     description:
@@ -645,6 +648,7 @@ export const services: Service[] = [
     pillar: "ramonage",
     isPillar: true,
     nav: "Ramonage de hotte",
+    navShort: "Ramonage",
     h1: "Ramonage de hotte professionnelle",
     title: "Ramonage de hotte professionnelle | Conduits & gaines d'extraction",
     description:
@@ -1004,6 +1008,7 @@ export const services: Service[] = [
     pillar: "extraction",
     isPillar: true,
     nav: "Système d'extraction",
+    navShort: "Extraction",
     h1: "Entretien du système d'extraction de cuisine professionnelle",
     title: "Système d'extraction cuisine professionnelle | Entretien complet",
     description:
@@ -1352,6 +1357,12 @@ export const services: Service[] = [
   },
 ];
 
+/**
+ * Registre complet. Le pilier Réparation vit dans son propre fichier :
+ * ce fichier dépassait déjà 1 400 lignes.
+ */
+export const services: Service[] = [...coreServices, ...repairServices];
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -1377,6 +1388,7 @@ export const pillarLabels: Record<Service["pillar"], string> = {
   degraissage: "Dégraissage",
   ramonage: "Ramonage",
   extraction: "Extraction",
+  reparation: "Réparation",
 };
 
 /** Couples prestation + ville réellement publiés — alimente generateStaticParams. */

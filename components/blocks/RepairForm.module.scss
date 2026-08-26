@@ -1,0 +1,135 @@
+@use "../../styles/tokens" as t;
+@use "../../styles/mixins" as m;
+
+/* Le formulaire de dépannage réutilise QuoteForm.module.scss ; ce fichier
+   n'ajoute que ce qui lui est propre. */
+
+.form {
+  /* Une cuisine à l'arrêt : le liseré signale la priorité sans crier. */
+  &[data-urgent] {
+    border-color: var(--c-flame);
+    box-shadow:
+      var(--sh-md),
+      inset 0 3px 0 0 var(--c-flame);
+  }
+}
+
+/* ---------------- Choix de l'état de l'installation ---------------- */
+.states {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-2);
+}
+
+.state {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+  padding: 11px 14px;
+  border: 1px solid var(--c-line);
+  border-radius: t.$r-sm;
+  cursor: pointer;
+  transition:
+    border-color t.$t-fast t.$ease,
+    background t.$t-fast t.$ease;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  &:hover {
+    border-color: var(--c-steel-2);
+  }
+
+  &[data-selected] {
+    background: var(--c-flame-soft);
+    border-color: var(--c-flame);
+  }
+
+  &:has(input:focus-visible) {
+    outline: 2px solid var(--c-flame);
+    outline-offset: 2px;
+  }
+}
+
+.stateName {
+  font-family: var(--font-display);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--c-ink);
+
+  .state[data-selected] & {
+    color: var(--c-flame-dark);
+  }
+}
+
+.stateHint {
+  font-size: var(--fs-sm);
+  color: var(--c-steel);
+  line-height: 1.4;
+}
+
+/* ---------------- Rappel d'urgence ---------------- */
+.urgentNote {
+  padding: 11px 14px;
+  border-radius: t.$r-sm;
+  background: var(--c-flame-soft);
+  border: 1px solid var(--c-flame);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--c-flame-dark);
+  line-height: 1.45;
+
+  a {
+    color: var(--c-flame-dark);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    white-space: nowrap;
+
+    @include m.focus-ring;
+  }
+}
+
+/* ---------------- Case photos / vidéo ---------------- */
+.media {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-3);
+  padding: var(--s-4);
+  border: 1px solid var(--c-line);
+  border-radius: t.$r-sm;
+  background: var(--c-bg-2);
+  cursor: pointer;
+
+  input {
+    margin-top: 3px;
+    flex: none;
+    width: 17px;
+    height: 17px;
+    accent-color: var(--c-flame);
+  }
+
+  span {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: var(--fs-sm);
+    color: var(--c-steel);
+    line-height: 1.45;
+  }
+
+  b {
+    font-family: var(--font-display);
+    font-size: var(--fs-base);
+    font-weight: 600;
+    color: var(--c-ink);
+  }
+
+  &:has(input:focus-visible) {
+    outline: 2px solid var(--c-flame);
+    outline-offset: 2px;
+  }
+}

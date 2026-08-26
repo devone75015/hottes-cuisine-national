@@ -107,8 +107,8 @@ export default function HomePage() {
       {/* ---------------- 03 · Les 4 prestations ---------------- */}
       <section className={`container ${s.services}`}>
         <div className="sectionHead">
-          <p className="eyebrow">Nos quatre métiers</p>
-          <h2>Une chaîne technique, quatre interventions distinctes</h2>
+          <p className="eyebrow">Nos cinq métiers</p>
+          <h2>Une chaîne technique, cinq interventions distinctes</h2>
           <p>
             Chaque prestation a son périmètre, son outillage et son document. Choisir la bonne évite
             de payer une intervention qui ne répond pas à votre besoin.
@@ -133,6 +133,49 @@ export default function HomePage() {
       {/* ---------------- 04 · Le réseau en coupe (pièce signature) ---------------- */}
       <section className={`container ${s.diagram}`}>
         <ExtractionDiagram />
+      </section>
+
+      {/* ---------------- 04b · En panne ? ---------------- */}
+      <section className={s.breakdown}>
+        <div className={`container ${s.breakdownInner}`}>
+          <div className={s.breakdownCopy}>
+            <p className="eyebrow">Réparation &amp; dépannage</p>
+            <h2>Votre hotte est en panne ?</h2>
+            <p>
+              Arrêt complet, aspiration qui a chuté, bruit anormal : nous établissons ce qui est
+              réellement en cause avant de remplacer quoi que ce soit. Aucun diagnostic par
+              téléphone — et aucune pièce changée sans l&apos;avoir justifiée.
+            </p>
+            <div className={s.breakdownActions}>
+              <a href={`tel:${site.phone.href}`} className="btn btn--lg">
+                {site.phone.display}
+              </a>
+              <Link href="/reparation-hotte-professionnelle/" className="btn btn--lg btn--onDark">
+                Réparation &amp; dépannage
+              </Link>
+            </div>
+          </div>
+
+          <ul className={s.symptoms}>
+            {[
+              { l: "Hotte arrêtée", h: "/depannage-hotte-restaurant/" },
+              { l: "N'aspire plus", h: "/hotte-professionnelle-n-aspire-plus/" },
+              { l: "Courroie", h: "/remplacement-courroie-hotte-professionnelle/" },
+              { l: "Moteur", h: "/reparation-moteur-hotte-professionnelle/" },
+              { l: "Extracteur", h: "/reparation-extracteur-cuisine-professionnelle/" },
+              { l: "Bruit, vibration", h: "/hotte-professionnelle-bruyante/" },
+            ].map((x) => (
+              <li key={x.h}>
+                <Link href={x.h}>
+                  <span className={s.symptomLabel}>{x.l}</span>
+                  <span className={s.symptomArrow} aria-hidden="true">
+                    →
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       {/* ---------------- 05 · Votre établissement ---------------- */}

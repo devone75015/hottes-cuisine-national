@@ -96,6 +96,30 @@ function titleFor(sv: Service, city: City, tpl: EditorialTemplate): string {
 
 function descriptionFor(sv: Service, city: City, tpl: EditorialTemplate): string {
   const near = city.nearby.slice(0, 2).join(", ");
+
+  /*
+   * Le silo réparation a sa propre promesse. Lui appliquer les formulations
+   * d'entretien (« attestation remise le jour même ») serait faux : sur une
+   * panne, ce que le prospect cherche est un diagnostic et un délai.
+   * Ces variantes sont aussi plus courtes — les H1 « réparation » sont longs.
+   */
+  if (sv.pillar === "reparation") {
+    switch (tpl) {
+      case "terrain":
+        return `${sv.h1} ${city.prep} : diagnostic sur site, réparation et remise en fonctionnement. Arrêts traités en priorité.`;
+      case "technique":
+        return `${sv.h1} ${city.prep} : diagnostic mécanique, devis avant travaux, remise en service. Également à ${near}.`;
+      case "sectoriel":
+        return `${sv.h1} ${city.prep} : intervention adaptée à votre type d'établissement et à votre rythme d'activité.`;
+      case "process":
+        return `${sv.h1} ${city.prep} : de l'appel au redémarrage, diagnostic puis réparation. Devis avant toute pièce remplacée.`;
+      case "comparatif":
+        return `${sv.h1} ${city.prep} : identifier la cause réelle avant de remplacer une pièce. Diagnostic sur site.`;
+      case "reassurance":
+        return `${sv.h1} ${city.prep} : constat écrit, devis avant travaux et préconisation pour éviter la récidive.`;
+    }
+  }
+
   switch (tpl) {
     case "terrain":
       return `${sv.h1} ${city.prep} et alentours (${near}). Intervention hors service, rapport photo et attestation remis le jour même.`;

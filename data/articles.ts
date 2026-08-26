@@ -1,4 +1,5 @@
 import type { Article } from "@/lib/types";
+import { repairArticles } from "./articles-reparation";
 
 /**
  * Centre d'expertise — vague 1.
@@ -7,7 +8,7 @@ import type { Article } from "@/lib/types";
  * par une page commerciale (règle de non-cannibalisation, §4 du cadrage).
  */
 
-export const articles: Article[] = [
+const coreArticles: Article[] = [
   {
     slug: "frequence-nettoyage-hotte-professionnelle",
     title: "Quelle fréquence pour nettoyer une hotte professionnelle ?",
@@ -349,6 +350,9 @@ export const articles: Article[] = [
     ],
   },
 ];
+
+/** Centre d'expertise complet. */
+export const articles: Article[] = [...coreArticles, ...repairArticles];
 
 // ---------------------------------------------------------------------------
 

@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/Blocks";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { Cover } from "@/components/ui/Cover";
+import { RepairForm } from "@/components/blocks/RepairForm";
 import { getCity } from "@/data/cities";
 import { cityLinksFor, getPillar, getService, serviceSlugs, pillarLabels } from "@/data/services";
 import { buildMetadata, faqJsonLd, serviceJsonLd } from "@/lib/seo";
@@ -74,16 +75,25 @@ export default async function ServicePage({ params }: PageProps<"/[service]">) {
         h1={sv.h1}
         lead={sv.lead}
         meta={
-          <>
-            <span>Devis sous 24 h</span>
-            <span>Attestation remise</span>
-            <span>Intervention hors service</span>
-            <span>Partout en France</span>
-          </>
+          sv.pillar === "reparation" ? (
+            <>
+              <span>Diagnostic sur site</span>
+              <span>Devis avant travaux</span>
+              <span>Arrêts traités en priorité</span>
+              <span>Partout en France</span>
+            </>
+          ) : (
+            <>
+              <span>Devis sous 24 h</span>
+              <span>Attestation remise</span>
+              <span>Intervention hors service</span>
+              <span>Partout en France</span>
+            </>
+          )
         }
       />
 
-      <PageBody service={sv.nav}>
+      <PageBody service={sv.nav} form={sv.pillar === "reparation" ? <RepairForm /> : undefined}>
         <Cover imageKey={sv.slug} priority />
         <Sections sections={sv.sections} />
         <Included items={sv.included} />

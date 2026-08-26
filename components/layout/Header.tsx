@@ -84,7 +84,7 @@ export function Header() {
                   data-open={panel === p.slug || undefined}
                   onFocus={() => setPanel(p.slug)}
                 >
-                  {p.nav}
+                  {p.navShort ?? p.nav}
                 </Link>
                 {panel === p.slug && (
                    
@@ -105,10 +105,7 @@ export function Header() {
               </div>
             ))}
             <Link href="/zones/" className={s.navLink}>
-              Zones d&apos;intervention
-            </Link>
-            <Link href="/contrat-entretien-hotte-professionnelle/" className={s.navLink}>
-              Contrat
+              Zones
             </Link>
             <Link href="/expertise/" className={s.navLink}>
               Expertise

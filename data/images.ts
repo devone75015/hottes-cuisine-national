@@ -677,6 +677,131 @@ export const images: SiteImage[] = [
     credit: "Mikail Firat / Pexels",
     ratio: "wide",
   },
+  /* ---------------------- PILIER 5 — RÉPARATION ------------------------- */
+  {
+    key: "reparation-hotte-professionnelle",
+    pexelsId: 35290678,
+    title: "Diagnostic d'un équipement technique",
+    alt: "Technicien examinant et réparant un équipement mécanique industriel dans un atelier",
+    credit: "Bulat843 / Pexels",
+    ratio: "wide",
+  },
+  {
+    key: "depannage-hotte-restaurant",
+    pexelsId: 18328333,
+    title: "Dépannage sur machine en fonctionnement",
+    alt: "Intervenant en équipement de protection réparant une machine industrielle à l'aide de son outillage",
+    credit: "John Coote / Pexels",
+    ratio: "wide",
+  },
+  {
+    key: "remplacement-courroie-hotte-professionnelle",
+    pexelsId: 5121549,
+    title: "Courroie et poulie de transmission",
+    alt: "Gros plan sur une courroie de transmission engagée sur sa poulie, pièce d'usure d'un système d'entraînement",
+    credit: "Hebert Santos / Pexels",
+    ratio: "wide",
+  },
+  {
+    key: "reparation-moteur-hotte-professionnelle",
+    pexelsId: 31583977,
+    title: "Réparation de moteur",
+    alt: "Mains d'un technicien intervenant sur le moteur situé à l'intérieur d'une machine industrielle",
+    credit: "Bulat843 / Pexels",
+    ratio: "wide",
+  },
+  {
+    key: "reparation-extracteur-cuisine-professionnelle",
+    pexelsId: 6034678,
+    title: "Caissons d'extraction en toiture",
+    alt: "Vue aérienne de caissons d'extraction métalliques vieillissants installés en toiture parmi les conduits",
+    credit: "Tom Fisk / Pexels",
+    ratio: "wide",
+  },
+  {
+    key: "hotte-professionnelle-n-aspire-plus",
+    pexelsId: 6213723,
+    title: "Vapeurs de cuisson non reprises",
+    alt: "Vapeurs s'élevant d'une sauteuse en inox dans une cuisine professionnelle, signe d'une extraction insuffisante",
+    credit: "Vovka Panda / Pexels",
+    ratio: "wide",
+  },
+  {
+    key: "hotte-professionnelle-bruyante",
+    pexelsId: 36285830,
+    title: "Pales de ventilateur en rotation",
+    alt: "Gros plan sur les pales d'un ventilateur industriel, source fréquente de bruit et de vibration",
+    credit: "Sokil / Pexels",
+    ratio: "wide",
+  },
+  {
+    key: "maintenance-hotte-professionnelle",
+    pexelsId: 3855223,
+    title: "Outillage de maintenance",
+    alt: "Technicien sélectionnant ses outils avant une intervention de maintenance préventive",
+    credit: "Olly / Pexels",
+    ratio: "wide",
+  },
+  {
+    key: "home-panne",
+    pexelsId: 14319099,
+    title: "Contrôle au multimètre",
+    alt: "Intervenant contrôlant au multimètre le câblage d'une armoire de commande industrielle",
+    credit: "Onics Energy / Pexels",
+    ratio: "wide",
+  },
+
+  /* --------------------- VILLES — deuxième lot -------------------------- */
+  {
+    key: "city-nantes",
+    pexelsId: 29080604,
+    title: "Cuisine inox contemporaine",
+    alt: "Cuisine professionnelle contemporaine entièrement équipée en acier inoxydable",
+    credit: "AJ Ahamad / Pexels",
+    ratio: "wide",
+  },
+  {
+    key: "city-strasbourg",
+    pexelsId: 15119073,
+    title: "Hotte inox au-dessus du poste de cuisson",
+    alt: "Hotte d'extraction en inox surplombant un poste de cuisson en fonctionnement",
+    credit: "Connor Scott McManus / Pexels",
+    ratio: "wide",
+  },
+  {
+    key: "city-nice",
+    pexelsId: 6980566,
+    title: "Plan de cuisson sous hotte",
+    alt: "Plan de cuisson intégré surmonté de sa hotte d'aspiration dans une cuisine claire",
+    credit: "Art Bovich / Pexels",
+    ratio: "wide",
+  },
+
+  /* ------------------- ARTICLES — silo réparation ----------------------- */
+  {
+    key: "article-entretien-ou-maintenance-difference",
+    pexelsId: 33531830,
+    title: "Mesure et contrôle en atelier",
+    alt: "Technicien réalisant une mesure de contrôle sur un équipement à l'aide d'un multimètre",
+    credit: "Bulat843 / Pexels",
+    ratio: "wide",
+  },
+  {
+    key: "article-duree-de-vie-courroie-extracteur",
+    pexelsId: 963635,
+    title: "Mécanisme de transmission industriel",
+    alt: "Mécanisme de transmission en laiton et acier d'une machine industrielle, poulies et arbre visibles",
+    credit: "Brett Sayles / Pexels",
+    ratio: "wide",
+  },
+  {
+    key: "article-reparer-ou-remplacer-moteur-hotte",
+    pexelsId: 31499909,
+    title: "Expertise d'un appareil électrique",
+    alt: "Technicien examinant un appareil électrique démonté pour établir s'il est réparable",
+    credit: "Bulat843 / Pexels",
+    ratio: "wide",
+  },
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -700,11 +825,7 @@ export const spareImages: { pexelsId: number; theme: string }[] = [
   { pexelsId: 15721860, theme: "Chariots de production en boulangerie" },
   { pexelsId: 8535152, theme: "Réfectoire scolaire" },
   { pexelsId: 8617542, theme: "Service en restauration scolaire" },
-  { pexelsId: 6213723, theme: "Cuisson en sauteuse inox, vapeur" },
   { pexelsId: 4253296, theme: "Cuisine ouverte, deux cuisiniers" },
-  { pexelsId: 15119073, theme: "Hotte inox au-dessus d'une plaque" },
-  { pexelsId: 29080604, theme: "Cuisine inox contemporaine" },
-  { pexelsId: 6980566, theme: "Plan de cuisson sous hotte" },
 ];
 
 /* -------------------------------------------------------------------------- */

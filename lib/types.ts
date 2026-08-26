@@ -1,4 +1,4 @@
-export type PillarKey = "nettoyage" | "degraissage" | "ramonage" | "extraction";
+export type PillarKey = "nettoyage" | "degraissage" | "ramonage" | "extraction" | "reparation";
 
 export interface Faq {
   q: string;
@@ -19,6 +19,13 @@ export interface Service {
   isPillar: boolean;
   /** Libellé court pour la navigation et les fils d'Ariane. */
   nav: string;
+  /**
+   * Libellé ultra-court réservé à la barre de navigation principale.
+   * Avec cinq piliers, « Réparation & dépannage » et « Système d'extraction »
+   * font déborder la barre : le menu utilise ce libellé, tout le reste du site
+   * garde `nav`.
+   */
+  navShort?: string;
   h1: string;
   title: string;
   description: string;

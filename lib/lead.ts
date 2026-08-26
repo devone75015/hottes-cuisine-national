@@ -15,8 +15,12 @@
 
 export type LeadStage = "partial" | "complete";
 
+/** Nature de la demande : devis d'entretien ou dépannage en cours. */
+export type LeadKind = "quote" | "repair";
+
 export interface LeadPayload {
   stage: LeadStage;
+  kind?: LeadKind;
   service?: string;
   city?: string;
   postalCode?: string;
@@ -31,6 +35,16 @@ export interface LeadPayload {
   message?: string;
   /** Page d'origine — sert à l'attribution SEO / Ads. */
   source?: string;
+
+  /* ---- Champs propres au dépannage (§14 du brief réparation) ---- */
+  /** Nature de la panne — plusieurs symptômes peuvent coexister. */
+  symptoms?: string[];
+  /** Arrêt complet ou fonctionnement dégradé : détermine la priorité. */
+  state?: string;
+  brand?: string;
+  model?: string;
+  /** Le demandeur déclare pouvoir joindre des photos ou une vidéo. */
+  hasMedia?: boolean;
 }
 
 export interface LeadResult {
@@ -60,7 +74,11 @@ export async function submitLead(payload: LeadPayload): Promise<LeadResult> {
   }
 
   // TODO — brancher l'envoi réel ici (e-mail transactionnel / CRM / webhook).
-  console.info("[lead]", payload.stage, JSON.stringify(payload));
+  //
+  // ⚠ Les demandes `kind: "repair"` avec `state` = arrêt complet doivent être
+  // routées en priorité : ce sont des cuisines à l'arrêt. Prévoir une alerte
+  // distincte (SMS ou notification) plutôt qu'un simple e-mail en file.
+  console.info("[lead]", payload.kind ?? "quote", payload.stage, JSON.stringify(payload));
 
   return { ok: true };
 }

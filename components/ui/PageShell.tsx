@@ -36,18 +36,21 @@ export function PageBody({
   service,
   city,
   aside,
+  form,
 }: {
   children: ReactNode;
   service?: string;
   city?: string;
   aside?: ReactNode;
+  /** Remplace le formulaire de devis — les pages réparation y mettent le formulaire de dépannage. */
+  form?: ReactNode;
 }) {
   return (
     <div className={`container ${s.body}`}>
       <div className={s.main}>{children}</div>
       <aside className={s.aside}>
         <div className={s.asideSticky}>
-          <QuoteForm compact defaultService={service} defaultCity={city} />
+          {form ?? <QuoteForm compact defaultService={service} defaultCity={city} />}
           <div className={s.callCard}>
             <p className={s.callKicker}>Plus rapide</p>
             <a href={`tel:${site.phone.href}`} className={s.callNumber}>
