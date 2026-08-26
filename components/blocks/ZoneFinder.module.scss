@@ -1,0 +1,60 @@
+@use "../../styles/tokens" as t;
+@use "../../styles/mixins" as m;
+
+.finder {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  @include m.label;
+  color: var(--c-steel);
+}
+
+.row {
+  display: flex;
+  gap: var(--s-2);
+
+  input {
+    width: 132px;
+    flex: none;
+    padding: 14px 16px;
+    border: 1px solid var(--c-line);
+    border-radius: t.$r-sm;
+    background: var(--c-bg);
+    font-family: var(--font-mono);
+    font-size: var(--fs-base);
+    letter-spacing: 0.08em;
+    color: var(--c-ink);
+    transition: border-color t.$t-fast t.$ease, box-shadow t.$t-fast t.$ease;
+
+    &::placeholder {
+      color: var(--c-steel-2);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--c-flame);
+      box-shadow: var(--sh-focus);
+    }
+  }
+
+  @include m.down(t.$bp-xs) {
+    flex-wrap: wrap;
+
+    input {
+      width: 100%;
+    }
+
+    :global(.btn) {
+      width: 100%;
+    }
+  }
+}
+
+.error {
+  font-size: var(--fs-sm);
+  color: var(--c-flame-dark);
+  max-width: 46ch;
+}

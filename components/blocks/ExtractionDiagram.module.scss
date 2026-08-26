@@ -1,0 +1,411 @@
+@use "../../styles/tokens" as t;
+@use "../../styles/mixins" as m;
+
+.wrap {
+  --soil-o: 0;
+  --flow-speed: 3.4s;
+  --flow-o: 0.9;
+
+  background: var(--c-dark);
+  color: var(--c-on-dark);
+  border-radius: t.$r-md;
+  padding: var(--s-8) var(--s-7);
+  overflow: hidden;
+
+  &[data-soiled] {
+    --soil-o: 1;
+    --flow-speed: 9s;
+    --flow-o: 0.3;
+  }
+
+  @include m.mobile {
+    padding: var(--s-6) var(--s-4);
+  }
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--s-6);
+  margin-bottom: var(--s-7);
+  flex-wrap: wrap;
+
+  h2 {
+    @include m.heading(var(--fs-2xl));
+    margin-top: var(--s-3);
+    max-width: 20ch;
+  }
+}
+
+.intro {
+  color: var(--c-on-dark-2);
+  font-size: var(--fs-base);
+  max-width: 46ch;
+  margin-top: var(--s-3);
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: 11px 18px;
+  border: 1px solid #ffffff2e;
+  border-radius: t.$r-sm;
+  color: var(--c-on-dark);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: border-color t.$t-fast t.$ease, background t.$t-fast t.$ease;
+
+  @include m.focus-ring(var(--c-air-hi));
+
+  &:hover {
+    background: #ffffff10;
+    border-color: #ffffff5c;
+  }
+}
+
+.toggleDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-air-hi);
+  flex: none;
+  transition: background t.$t-base t.$ease;
+
+  .wrap[data-soiled] & {
+    background: var(--c-flame-hi);
+  }
+}
+
+/* ---------------- Scène ---------------- */
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  gap: var(--s-7);
+  align-items: start;
+
+  @include m.tablet-down {
+    grid-template-columns: 1fr;
+    gap: var(--s-6);
+  }
+}
+
+.svgHolder {
+  @include m.scroll-x;
+  border: 1px solid #ffffff14;
+  border-radius: t.$r-sm;
+  background: linear-gradient(180deg, #131c21 0%, #0b1114 100%);
+}
+
+.svg {
+  width: 100%;
+  min-width: 620px;
+  height: auto;
+  display: block;
+}
+
+/* ---------------- Bâtiment ---------------- */
+.wall {
+  fill: #ffffff05;
+}
+.roofLine {
+  stroke: #ffffff26;
+  stroke-width: 2;
+  fill: none;
+}
+.floorLine {
+  stroke: #ffffff0f;
+  stroke-width: 1;
+  fill: none;
+  stroke-dasharray: 3 7;
+}
+
+/* ---------------- Poste de cuisson ---------------- */
+.stoveBody {
+  fill: #1e2b32;
+  stroke: #ffffff1a;
+  stroke-width: 1;
+}
+.flames {
+  opacity: 0.85;
+}
+
+/* ---------------- Éléments ---------------- */
+.part {
+  cursor: pointer;
+  transition: opacity t.$t-base t.$ease;
+
+  .metal {
+    transition: filter t.$t-base t.$ease;
+  }
+
+  &[data-active] .metal {
+    filter: drop-shadow(0 0 14px rgba(23, 148, 139, 0.55));
+  }
+}
+
+/* Le lien SVG doit montrer un focus clavier visible */
+.svg a:focus-visible {
+  outline: 2px solid var(--c-air-hi);
+  outline-offset: 2px;
+}
+
+.seam {
+  stroke: #8fa2a9;
+  stroke-width: 1;
+  opacity: 0.45;
+  fill: none;
+}
+
+.hatch {
+  fill: none;
+  stroke: #55666d;
+  stroke-width: 2;
+  stroke-dasharray: 2 3;
+}
+
+.hatchRect {
+  fill: #7d8f96;
+  stroke: #4f6067;
+  stroke-width: 1;
+}
+
+.lamp {
+  fill: #f0e2b8;
+  opacity: 0.9;
+}
+
+.filterFrame {
+  fill: #2a373d;
+  stroke: #93a5ac;
+  stroke-width: 1.5;
+}
+
+.filterBlade {
+  stroke: #b8c6cb;
+  stroke-width: 4;
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+
+.turbineRing {
+  fill: #16222a;
+  stroke: #8fa2a9;
+  stroke-width: 2;
+}
+
+.blade {
+  stroke: #cfdadf;
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.hub {
+  fill: #c2451b;
+}
+
+.turbine {
+  transform-origin: 738px 201px;
+  animation: spin var(--flow-speed) linear infinite;
+}
+
+.cowl {
+  stroke: #b8c6cb;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+/* ---------------- Encrassement ---------------- */
+.soil,
+.soilDuct,
+.soilFilter {
+  opacity: calc(var(--soil-o) * 0.82);
+  transition: opacity t.$t-slow t.$ease;
+}
+
+.soilFilter {
+  opacity: calc(var(--soil-o) * 0.55);
+}
+
+.soilLine {
+  stroke: #4a2f18;
+  stroke-width: 5;
+  stroke-linecap: round;
+  opacity: calc(var(--soil-o) * 0.7);
+  transition: opacity t.$t-slow t.$ease;
+  fill: none;
+}
+
+/* ---------------- Flux d'air ---------------- */
+.flowPath {
+  fill: none;
+  stroke: #17948b;
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: calc(var(--flow-o) * 0.14);
+  transition: opacity t.$t-slow t.$ease;
+}
+
+.flowDash {
+  fill: none;
+  stroke: #3fd0c2;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 10 26;
+  opacity: var(--flow-o);
+  animation: drift var(--flow-speed) linear infinite;
+  transition: opacity t.$t-slow t.$ease;
+}
+
+@keyframes drift {
+  to {
+    stroke-dashoffset: -360;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flowDash,
+  .turbine {
+    animation: none;
+  }
+}
+
+/* ---------------- Repères ---------------- */
+.marker {
+  circle {
+    fill: #0e1417;
+    stroke: #ffffff33;
+    stroke-width: 1;
+    transition: stroke t.$t-base t.$ease, fill t.$t-base t.$ease;
+  }
+
+  text {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    fill: var(--c-on-dark-2);
+    transition: fill t.$t-base t.$ease;
+  }
+
+  &[data-active] {
+    circle {
+      fill: var(--c-flame);
+      stroke: var(--c-flame);
+    }
+    text {
+      fill: #fff;
+    }
+  }
+}
+
+/* ---------------- Panneau latéral ---------------- */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #ffffff17;
+
+  @include m.tablet-down {
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-top: 0;
+    gap: var(--s-2);
+  }
+}
+
+.item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  padding: 10px 12px;
+  border-bottom: 1px solid #ffffff17;
+  transition: background t.$t-fast t.$ease, padding-left t.$t-fast t.$ease;
+
+  @include m.focus-ring(var(--c-air-hi));
+
+  &:hover,
+  &[data-active] {
+    background: #ffffff0f;
+    padding-left: 18px;
+  }
+
+  @include m.tablet-down {
+    border: 1px solid #ffffff17;
+    border-radius: t.$r-sm;
+    padding: 8px 12px;
+
+    &:hover,
+    &[data-active] {
+      padding-left: 12px;
+      border-color: #ffffff40;
+    }
+  }
+}
+
+.itemIndex {
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  color: var(--c-steel-2);
+  flex: none;
+
+  .item[data-active] & {
+    color: var(--c-flame-hi);
+  }
+}
+
+.itemLabel {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--c-on-dark-2);
+
+  .item[data-active] & {
+    color: var(--c-on-dark);
+  }
+}
+
+.detail {
+  border: 1px solid #ffffff1f;
+  border-radius: t.$r-sm;
+  padding: var(--s-5);
+  background: #ffffff08;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+
+  h3 {
+    font-size: var(--fs-lg);
+    font-weight: 700;
+  }
+
+  :global(.arrowLink) {
+    color: var(--c-air-hi);
+    margin-top: var(--s-2);
+  }
+}
+
+.detailIndex {
+  @include m.label;
+  color: var(--c-flame-hi);
+}
+
+.detailBlurb {
+  font-size: var(--fs-base);
+  color: var(--c-on-dark-2);
+  line-height: 1.55;
+}

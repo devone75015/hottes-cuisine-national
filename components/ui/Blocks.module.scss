@@ -1,0 +1,434 @@
+@use "../../styles/tokens" as t;
+@use "../../styles/mixins" as m;
+
+/* ---------------- Sections éditoriales ---------------- */
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-8);
+}
+
+.section {
+  h2 {
+    @include m.heading(var(--fs-xl));
+    margin-bottom: var(--s-4);
+    padding-bottom: var(--s-3);
+    border-bottom: 1px solid var(--c-line-soft);
+    max-width: 28ch;
+  }
+}
+
+.callout {
+  margin-top: var(--s-5);
+  padding: var(--s-4) var(--s-5);
+  background: var(--c-brass-soft);
+  border-left: 3px solid var(--c-brass);
+  border-radius: 0 t.$r-sm t.$r-sm 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-base);
+  font-weight: 500;
+  color: var(--c-ink-2);
+  line-height: 1.55;
+  max-width: t.$w-prose;
+  position: relative;
+}
+
+.calloutMark {
+  display: none;
+}
+
+/* ---------------- Ce que comprend l'intervention ---------------- */
+.included {
+  h2 {
+    @include m.heading(var(--fs-xl));
+    margin-bottom: var(--s-5);
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(266px, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--c-line);
+  }
+
+  li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-4);
+    padding: var(--s-4) var(--s-4) var(--s-4) 0;
+    border-bottom: 1px solid var(--c-line-soft);
+    font-size: var(--fs-base);
+    color: var(--c-ink-2);
+  }
+}
+
+.includedNum {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--c-flame);
+  flex: none;
+}
+
+/* ---------------- Établissements ---------------- */
+.targets {
+  h2 {
+    @include m.heading(var(--fs-xl));
+    margin-bottom: var(--s-5);
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+  }
+
+  li {
+    padding: 8px 15px;
+    border: 1px solid var(--c-line);
+    border-radius: 40px;
+    background: var(--c-bg-2);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--c-ink-2);
+  }
+}
+
+/* ---------------- FAQ ---------------- */
+.faq {
+  h2 {
+    @include m.heading(var(--fs-xl));
+    margin-bottom: var(--s-5);
+  }
+}
+
+.faqList {
+  border-top: 1px solid var(--c-line);
+  max-width: 82ch;
+}
+
+.faqItem {
+  border-bottom: 1px solid var(--c-line);
+
+  summary {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--s-4);
+    padding: var(--s-4) 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    color: var(--c-ink);
+    transition: color t.$t-fast t.$ease;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &:hover {
+      color: var(--c-flame);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--c-flame);
+      outline-offset: 2px;
+    }
+  }
+
+  p {
+    padding: 0 var(--s-8) var(--s-5) 0;
+    font-family: var(--font-body);
+    font-size: var(--fs-md);
+    line-height: 1.68;
+    color: var(--c-ink-2);
+    max-width: t.$w-prose;
+
+    @include m.mobile {
+      padding-right: 0;
+    }
+  }
+}
+
+.faqIcon {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex: none;
+  margin-top: 8px;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    background: var(--c-flame);
+    transition: transform t.$t-base t.$ease;
+  }
+
+  &::before {
+    top: 6px;
+    left: 0;
+    width: 14px;
+    height: 2px;
+  }
+
+  &::after {
+    top: 0;
+    left: 6px;
+    width: 2px;
+    height: 14px;
+  }
+
+  details[open] &::after {
+    transform: scaleY(0);
+  }
+}
+
+/* ---------------- Bandeau CTA ---------------- */
+.cta {
+  background: var(--c-dark);
+  color: var(--c-on-dark);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 140% at 88% 0%, rgba(194, 69, 27, 0.24), transparent 62%);
+    pointer-events: none;
+  }
+}
+
+.ctaInner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.5fr auto;
+  gap: var(--s-8);
+  align-items: center;
+  padding-block: var(--s-9);
+
+  h2 {
+    @include m.heading(var(--fs-2xl));
+    margin-top: var(--s-3);
+    max-width: 18ch;
+  }
+
+  @include m.tablet-down {
+    grid-template-columns: 1fr;
+    gap: var(--s-6);
+    padding-block: var(--s-8);
+  }
+}
+
+.ctaText {
+  margin-top: var(--s-3);
+  color: var(--c-on-dark-2);
+  font-size: var(--fs-base);
+  max-width: 56ch;
+}
+
+.ctaActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  min-width: 264px;
+
+  @include m.down(t.$bp-sm) {
+    min-width: 0;
+  }
+}
+
+.ctaHours {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--c-steel);
+  text-align: center;
+  margin-top: var(--s-1);
+}
+
+/* ---------------- Réassurance ---------------- */
+.proof {
+  border-block: 1px solid var(--c-line);
+  background: var(--c-bg-2);
+}
+
+.proofInner {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+
+  @include m.down(t.$bp-sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.proofItem {
+  padding: var(--s-5) var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-right: 1px solid var(--c-line);
+
+  &:last-child {
+    border-right: 0;
+  }
+
+  b {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    font-variant-numeric: tabular-nums;
+  }
+
+  span {
+    @include m.label;
+    font-size: var(--fs-2xs);
+    color: var(--c-steel);
+  }
+
+  @include m.down(t.$bp-sm) {
+    border-bottom: 1px solid var(--c-line);
+
+    &:nth-child(2n) {
+      border-right: 0;
+    }
+    &:nth-last-child(-n + 2) {
+      border-bottom: 0;
+    }
+  }
+}
+
+/* ---------------- Prestations liées ---------------- */
+.related {
+  h2 {
+    @include m.heading(var(--fs-xl));
+    margin-bottom: var(--s-5);
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(288px, 1fr));
+    gap: var(--s-4);
+  }
+
+  li a {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+    height: 100%;
+    padding: var(--s-5);
+    border: 1px solid var(--c-line);
+    border-radius: t.$r-sm;
+    background: var(--c-bg);
+    transition:
+      border-color t.$t-fast t.$ease,
+      box-shadow t.$t-fast t.$ease,
+      transform t.$t-fast t.$ease;
+
+    @include m.focus-ring;
+
+    &:hover {
+      border-color: var(--c-steel-2);
+      box-shadow: var(--sh-md);
+      transform: translateY(-2px);
+
+      .relatedArrow {
+        transform: translateX(4px);
+      }
+    }
+  }
+}
+
+.relatedEyebrow {
+  @include m.label;
+  font-size: var(--fs-2xs);
+  color: var(--c-air);
+}
+
+.relatedTitle {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--c-ink);
+}
+
+.relatedLead {
+  font-size: var(--fs-sm);
+  color: var(--c-steel);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.relatedArrow {
+  color: var(--c-flame);
+  font-size: var(--fs-lg);
+  transition: transform t.$t-fast t.$ease;
+}
+
+/* ---------------- Zone d'intervention ---------------- */
+.zone {
+  padding: var(--s-6);
+  border: 1px solid var(--c-line);
+  border-radius: t.$r-sm;
+  background: var(--c-bg-2);
+
+  h2 {
+    @include m.heading(var(--fs-lg));
+    margin-bottom: var(--s-3);
+  }
+}
+
+.zoneIntro {
+  font-size: var(--fs-base);
+  color: var(--c-ink-2);
+  max-width: 66ch;
+}
+
+.zoneList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-block: var(--s-4);
+
+  li {
+    padding: 6px 13px;
+    background: var(--c-bg);
+    border: 1px solid var(--c-line);
+    border-radius: t.$r-xs;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--c-ink-2);
+  }
+}
+
+.zoneNote {
+  font-size: var(--fs-sm);
+  color: var(--c-steel);
+  max-width: 66ch;
+}
+
+/* ==================== Vignette de prestation liée ==================== */
+.related li a {
+  padding-top: 0;
+  overflow: hidden;
+}
+
+.relatedThumb {
+  margin: 0 calc(var(--s-5) * -1) var(--s-3);
+  width: calc(100% + var(--s-5) * 2);
+  border-radius: 0;
+  aspect-ratio: 16 / 9;
+
+  img {
+    transition: transform t.$t-slow t.$ease;
+  }
+
+  .related li a:hover & img {
+    transform: scale(1.04);
+  }
+}

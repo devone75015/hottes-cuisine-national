@@ -1,0 +1,44 @@
+@use "../../styles/tokens" as t;
+@use "../../styles/mixins" as m;
+
+.wrap {
+  border-bottom: 1px solid var(--c-line-soft);
+  background: var(--c-bg-2);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2);
+  padding-block: 11px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--c-steel);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+
+  a {
+    color: var(--c-steel);
+    transition: color t.$t-fast t.$ease;
+
+    @include m.focus-ring;
+
+    &:hover {
+      color: var(--c-flame);
+    }
+  }
+
+  span[aria-current] {
+    color: var(--c-ink-2);
+  }
+}
+
+.sep {
+  color: var(--c-steel-2);
+  opacity: 0.6;
+}

@@ -1,0 +1,123 @@
+@use "../../../styles/tokens" as t;
+@use "../../../styles/mixins" as m;
+
+/* ---------------- Colonne latérale : communes ---------------- */
+.asideZone {
+  padding: var(--s-5);
+  border: 1px solid var(--c-line);
+  border-radius: t.$r-md;
+  background: var(--c-bg-2);
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: var(--s-4);
+  }
+
+  li {
+    padding: 5px 11px;
+    background: var(--c-bg);
+    border: 1px solid var(--c-line);
+    border-radius: t.$r-xs;
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    color: var(--c-ink-2);
+  }
+}
+
+.asideHead {
+  @include m.label;
+  color: var(--c-steel);
+  margin-bottom: var(--s-3);
+  padding-bottom: var(--s-2);
+  border-bottom: 1px solid var(--c-line);
+}
+
+/* ---------------- Prestations sœurs ---------------- */
+.siblings {
+  h2 {
+    @include m.heading(var(--fs-xl));
+    margin-bottom: var(--s-4);
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--c-line);
+  }
+
+  li a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-4);
+    padding: var(--s-4) 0;
+    border-bottom: 1px solid var(--c-line);
+    transition: padding-left t.$t-fast t.$ease;
+
+    @include m.focus-ring;
+
+    &:hover {
+      padding-left: var(--s-3);
+
+      .siblingTitle {
+        color: var(--c-flame);
+      }
+
+      .siblingArrow {
+        transform: translateX(4px);
+      }
+    }
+  }
+}
+
+.siblingTitle {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--c-ink);
+  transition: color t.$t-fast t.$ease;
+}
+
+.siblingArrow {
+  color: var(--c-flame);
+  flex: none;
+  transition: transform t.$t-fast t.$ease;
+}
+
+/* ---------------- Maillage remontant ---------------- */
+.parents {
+  padding: var(--s-5) var(--s-6);
+  background: var(--c-bg-2);
+  border-left: 3px solid var(--c-air);
+  border-radius: 0 t.$r-sm t.$r-sm 0;
+
+  h2 {
+    @include m.label;
+    color: var(--c-air);
+    margin-bottom: var(--s-3);
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+  }
+
+  li a {
+    font-size: var(--fs-base);
+    color: var(--c-ink-2);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--c-line);
+
+    @include m.focus-ring;
+
+    &:hover {
+      color: var(--c-flame);
+      text-decoration-color: currentColor;
+    }
+  }
+}

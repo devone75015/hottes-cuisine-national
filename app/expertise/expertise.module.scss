@@ -1,0 +1,99 @@
+@use "../../styles/tokens" as t;
+@use "../../styles/mixins" as m;
+
+.wrap {
+  padding-block: var(--s-9) var(--s-10);
+
+  @include m.mobile {
+    padding-block: var(--s-7) var(--s-8);
+  }
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--s-4);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  height: 100%;
+  padding: var(--s-6) var(--s-5) var(--s-5);
+  border: 1px solid var(--c-line);
+  border-radius: t.$r-sm;
+  transition:
+    border-color t.$t-fast t.$ease,
+    box-shadow t.$t-fast t.$ease,
+    transform t.$t-fast t.$ease;
+
+  @include m.focus-ring;
+
+  h2 {
+    @include m.heading(var(--fs-lg));
+    color: var(--c-ink);
+    transition: color t.$t-fast t.$ease;
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+    line-height: 1.6;
+    color: var(--c-steel);
+    flex: 1;
+  }
+
+  &:hover {
+    border-color: var(--c-steel-2);
+    box-shadow: var(--sh-md);
+    transform: translateY(-2px);
+
+    h2 {
+      color: var(--c-flame);
+    }
+  }
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--c-line-soft);
+}
+
+.cat {
+  @include m.label;
+  font-size: var(--fs-2xs);
+  color: var(--c-air);
+}
+
+.time {
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: 0.06em;
+  color: var(--c-steel-2);
+}
+
+/* ==================== Vignette de carte article ==================== */
+.card {
+  padding-top: 0;
+  overflow: hidden;
+}
+
+.cardThumb {
+  margin: 0 calc(var(--s-5) * -1) var(--s-4);
+  width: calc(100% + var(--s-5) * 2);
+  border-radius: 0;
+  aspect-ratio: 16 / 9;
+
+  img {
+    transition: transform t.$t-slow t.$ease;
+  }
+
+  .card:hover & img {
+    transform: scale(1.04);
+  }
+}

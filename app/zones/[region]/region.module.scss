@@ -1,0 +1,193 @@
+@use "../../../styles/tokens" as t;
+@use "../../../styles/mixins" as m;
+
+/* ---------------- Colonne latérale : départements ---------------- */
+.asideDept {
+  padding: var(--s-5);
+  border: 1px solid var(--c-line);
+  border-radius: t.$r-md;
+  background: var(--c-bg-2);
+
+  ul {
+    display: flex;
+    flex-direction: column;
+  }
+
+  li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-3);
+    padding: 7px 0;
+    border-bottom: 1px solid var(--c-line);
+    font-size: var(--fs-sm);
+    color: var(--c-ink-2);
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+}
+
+.asideHead {
+  @include m.label;
+  color: var(--c-steel);
+  margin-bottom: var(--s-3);
+  padding-bottom: var(--s-2);
+  border-bottom: 1px solid var(--c-line);
+}
+
+.deptCode {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--c-flame);
+  flex: none;
+  min-width: 22px;
+}
+
+/* ---------------- Pages ville ---------------- */
+.cityBlock {
+  h2 {
+    @include m.heading(var(--fs-xl));
+    margin-bottom: var(--s-5);
+  }
+}
+
+.cityList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--s-4);
+
+  > li {
+    padding: var(--s-5);
+    border: 1px solid var(--c-line);
+    border-radius: t.$r-sm;
+    background: var(--c-bg);
+  }
+}
+
+.cityName {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--c-ink);
+}
+
+.cityEpci {
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: 0.05em;
+  color: var(--c-steel);
+  margin-bottom: var(--s-3);
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--c-line-soft);
+}
+
+.cityServices {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  a {
+    font-size: var(--fs-sm);
+    color: var(--c-ink-2);
+    text-transform: capitalize;
+
+    @include m.focus-ring;
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
+
+    &:hover {
+      color: var(--c-flame);
+    }
+  }
+}
+
+/* ---------------- Villes desservies ---------------- */
+.citiesCovered {
+  h2 {
+    @include m.heading(var(--fs-xl));
+    margin-bottom: var(--s-3);
+  }
+}
+
+.citiesIntro {
+  font-size: var(--fs-base);
+  color: var(--c-steel);
+  margin-bottom: var(--s-4);
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-bottom: var(--s-4);
+
+  li {
+    padding: 7px 14px;
+    border: 1px solid var(--c-line);
+    border-radius: t.$r-xs;
+    background: var(--c-bg-2);
+    font-size: var(--fs-sm);
+    color: var(--c-ink-2);
+  }
+}
+
+.citiesNote {
+  font-size: var(--fs-sm);
+  color: var(--c-steel);
+  max-width: 70ch;
+}
+
+/* ---------------- Prestations ---------------- */
+.servicesBlock {
+  h2 {
+    @include m.heading(var(--fs-xl));
+    margin-bottom: var(--s-4);
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(276px, 1fr));
+    gap: var(--s-3);
+  }
+
+  li a {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 100%;
+    padding: var(--s-4) var(--s-5);
+    border: 1px solid var(--c-line);
+    border-radius: t.$r-sm;
+    transition: border-color t.$t-fast t.$ease, box-shadow t.$t-fast t.$ease;
+
+    @include m.focus-ring;
+
+    &:hover {
+      border-color: var(--c-steel-2);
+      box-shadow: var(--sh-md);
+
+      .svcName {
+        color: var(--c-flame);
+      }
+    }
+  }
+}
+
+.svcName {
+  font-family: var(--font-display);
+  font-size: var(--fs-base);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--c-ink);
+  transition: color t.$t-fast t.$ease;
+}
+
+.svcLead {
+  font-size: var(--fs-sm);
+  color: var(--c-steel);
+  line-height: 1.5;
+}

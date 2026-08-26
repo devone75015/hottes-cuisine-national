@@ -1,0 +1,69 @@
+@use "../../styles/tokens" as t;
+@use "../../styles/mixins" as m;
+
+.wrap {
+  @include m.scroll-x;
+  border: 1px solid var(--c-line);
+  border-radius: t.$r-sm;
+
+  table {
+    width: 100%;
+    min-width: 620px;
+    font-size: var(--fs-sm);
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: var(--s-4);
+    border-bottom: 1px solid var(--c-line-soft);
+    vertical-align: top;
+  }
+
+  thead th {
+    @include m.label;
+    font-size: var(--fs-2xs);
+    color: var(--c-steel);
+    background: var(--c-bg-2);
+    border-bottom: 1px solid var(--c-line);
+    white-space: nowrap;
+  }
+
+  tbody th {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--c-ink);
+    letter-spacing: -0.01em;
+  }
+
+  tbody td {
+    color: var(--c-ink-2);
+    line-height: 1.5;
+  }
+
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+}
+
+.priceCol {
+  white-space: nowrap;
+  text-align: right !important;
+}
+
+.price {
+  font-family: var(--font-mono);
+  font-size: var(--fs-base);
+  font-variant-numeric: tabular-nums;
+  color: var(--c-ink);
+  font-weight: 500;
+}
+
+.quote {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-flame);
+}

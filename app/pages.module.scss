@@ -1,0 +1,267 @@
+@use "../styles/tokens" as t;
+@use "../styles/mixins" as m;
+
+/* Styles partagés par les pages commerciales et éditoriales. */
+
+.h2 {
+  @include m.heading(var(--fs-xl));
+  margin-bottom: var(--s-4);
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--c-line-soft);
+  max-width: 30ch;
+}
+
+/* ---------------- Grille de cartes ---------------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
+  gap: var(--s-4);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-5);
+  border: 1px solid var(--c-line);
+  border-radius: t.$r-sm;
+  background: var(--c-bg);
+
+  h3 {
+    font-size: var(--fs-base);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  p {
+    font-size: var(--fs-sm);
+    color: var(--c-ink-2);
+    line-height: 1.55;
+  }
+}
+
+.cardKicker {
+  @include m.label;
+  font-size: var(--fs-2xs);
+  color: var(--c-air);
+}
+
+/* ---------------- Timeline verticale ---------------- */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  border-left: 2px solid var(--c-line);
+  padding-left: var(--s-6);
+  gap: var(--s-6);
+
+  @include m.mobile {
+    padding-left: var(--s-5);
+  }
+}
+
+.step {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--s-6) * -1 - 6px);
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--c-bg);
+    border: 2px solid var(--c-flame);
+
+    @include m.mobile {
+      left: calc(var(--s-5) * -1 - 6px);
+    }
+  }
+
+  h3 {
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--s-2);
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-size: var(--fs-md);
+    line-height: 1.65;
+    color: var(--c-ink-2);
+    max-width: t.$w-prose;
+  }
+}
+
+.stepN {
+  @include m.label;
+  font-size: var(--fs-2xs);
+  color: var(--c-flame);
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ---------------- Encart d'avertissement ---------------- */
+.notice {
+  padding: var(--s-5) var(--s-6);
+  background: var(--c-brass-soft);
+  border-left: 3px solid var(--c-brass);
+  border-radius: 0 t.$r-sm t.$r-sm 0;
+  max-width: 78ch;
+
+  h3 {
+    @include m.label;
+    color: var(--c-brass);
+    margin-bottom: var(--s-3);
+  }
+
+  p {
+    font-size: var(--fs-base);
+    color: var(--c-ink-2);
+    line-height: 1.6;
+
+    + p {
+      margin-top: var(--s-3);
+    }
+  }
+}
+
+/* ---------------- Liste de contrôle ---------------- */
+.checks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  max-width: 76ch;
+
+  li {
+    display: flex;
+    gap: var(--s-3);
+    align-items: flex-start;
+    font-size: var(--fs-base);
+    color: var(--c-ink-2);
+    line-height: 1.55;
+
+    &::before {
+      content: "";
+      flex: none;
+      width: 16px;
+      height: 16px;
+      margin-top: 5px;
+      border-radius: t.$r-xs;
+      background: var(--c-air-soft);
+      border: 1px solid var(--c-air);
+      background-image: linear-gradient(45deg, transparent 42%, var(--c-air) 42%, var(--c-air) 54%, transparent 54%),
+        linear-gradient(-45deg, transparent 42%, var(--c-air) 42%, var(--c-air) 54%, transparent 54%);
+      background-size: 9px 9px;
+      background-position: 3px 5px, 6px 5px;
+      background-repeat: no-repeat;
+    }
+  }
+}
+
+/* ---------------- Contact ---------------- */
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--s-4);
+}
+
+.contactCard {
+  padding: var(--s-5);
+  border: 1px solid var(--c-line);
+  border-radius: t.$r-sm;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  strong {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  a {
+    color: var(--c-flame);
+
+    @include m.focus-ring;
+  }
+
+  span {
+    font-size: var(--fs-sm);
+    color: var(--c-steel);
+    line-height: 1.5;
+  }
+}
+
+/* ---------------- Page devis pleine largeur ---------------- */
+.quoteLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 440px;
+  gap: var(--s-9);
+  align-items: start;
+  padding-block: var(--s-9) var(--s-10);
+
+  @include m.tablet-down {
+    grid-template-columns: 1fr;
+    gap: var(--s-7);
+    padding-block: var(--s-7) var(--s-8);
+  }
+}
+
+.quoteCopy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+}
+
+.quoteForm {
+  position: sticky;
+  top: calc(var(--h-nav) + var(--s-4));
+
+  @include m.tablet-down {
+    position: static;
+    max-width: 480px;
+  }
+}
+
+/* ---------------- Pages légales ---------------- */
+.legal {
+  h2 {
+    @include m.heading(var(--fs-lg));
+    margin-top: var(--s-6);
+    margin-bottom: var(--s-3);
+  }
+
+  p,
+  li {
+    font-family: var(--font-body);
+    font-size: var(--fs-md);
+    line-height: 1.7;
+    color: var(--c-ink-2);
+    max-width: t.$w-prose;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+    margin-top: var(--s-3);
+    padding-left: var(--s-5);
+    list-style: disc;
+  }
+}
+
+.todo {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: t.$r-xs;
+  background: var(--c-flame-soft);
+  border: 1px solid var(--c-flame);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-flame-dark);
+}

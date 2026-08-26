@@ -1,0 +1,342 @@
+@use "../../styles/tokens" as t;
+@use "../../styles/mixins" as m;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: var(--c-bg);
+  border-bottom: 1px solid var(--c-line);
+}
+
+/* ---------------- Topbar ---------------- */
+.topbar {
+  background: var(--c-dark);
+  color: var(--c-on-dark-2);
+
+  @include m.mobile {
+    display: none;
+  }
+}
+
+.topbarInner {
+  height: var(--h-topbar);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-5);
+}
+
+.baseline {
+  font-size: var(--fs-sm);
+  letter-spacing: 0.01em;
+}
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--c-flame);
+}
+
+/* ---------------- Barre principale ---------------- */
+.bar {
+  background: var(--c-bg);
+}
+
+.barInner {
+  height: var(--h-nav);
+  display: flex;
+  align-items: center;
+  gap: var(--s-6);
+
+  @include m.tablet-down {
+    gap: var(--s-4);
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  flex: none;
+  color: var(--c-ink);
+
+  @include m.focus-ring;
+}
+
+.mark {
+  width: 34px;
+  height: 30px;
+  flex: none;
+}
+
+.logoText {
+  font-family: var(--font-display);
+  font-size: var(--fs-base);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-transform: uppercase;
+
+  em {
+    font-style: normal;
+    color: var(--c-flame);
+  }
+
+  @include m.down(t.$bp-sm) {
+    font-size: var(--fs-sm);
+  }
+}
+
+/* ---------------- Nav desktop ---------------- */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1);
+  margin-left: auto;
+
+  @include m.tablet-down {
+    display: none;
+  }
+}
+
+.navItem {
+  position: relative;
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  height: var(--h-nav);
+  padding: 0 12px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--c-ink-2);
+  border-bottom: 2px solid transparent;
+  transition: color t.$t-fast t.$ease, border-color t.$t-fast t.$ease;
+
+  @include m.focus-ring;
+
+  &:hover,
+  &[data-open] {
+    color: var(--c-flame);
+    border-bottom-color: var(--c-flame);
+  }
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 288px;
+  background: var(--c-bg);
+  border: 1px solid var(--c-line);
+  border-radius: 0 0 t.$r-sm t.$r-sm;
+  box-shadow: var(--sh-lg);
+  padding: var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+
+  ul {
+    display: flex;
+    flex-direction: column;
+  }
+
+  li a {
+    display: block;
+    padding: 7px 8px;
+    font-size: var(--fs-sm);
+    color: var(--c-ink-2);
+    border-radius: t.$r-xs;
+    transition: background t.$t-fast t.$ease, color t.$t-fast t.$ease;
+
+    @include m.focus-ring;
+
+    &:hover {
+      background: var(--c-bg-2);
+      color: var(--c-flame);
+    }
+  }
+}
+
+.dropHead {
+  @include m.label;
+  color: var(--c-steel);
+  padding: 0 8px var(--s-2);
+  border-bottom: 1px solid var(--c-line-soft);
+  line-height: 1.4;
+}
+
+.dropAll {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--c-flame);
+  padding: var(--s-2) 8px 0;
+  border-top: 1px solid var(--c-line-soft);
+  margin-top: var(--s-1);
+
+  @include m.focus-ring;
+}
+
+/* ---------------- Actions ---------------- */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  flex: none;
+
+  @include m.tablet-down {
+    margin-left: auto;
+  }
+
+  @include m.mobile {
+    display: none;
+  }
+}
+
+.phone {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--font-display);
+  font-size: var(--fs-base);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--c-ink);
+  white-space: nowrap;
+
+  @include m.focus-ring;
+
+  svg {
+    color: var(--c-flame);
+  }
+
+  &:hover {
+    color: var(--c-flame);
+  }
+}
+
+/* ---------------- Burger ---------------- */
+.burger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--c-line);
+  border-radius: t.$r-sm;
+  flex: none;
+  margin-left: auto;
+
+  @include m.focus-ring;
+
+  @include m.tablet-down {
+    display: flex;
+  }
+}
+
+.burgerBars {
+  position: relative;
+  width: 18px;
+  height: 2px;
+  background: var(--c-ink);
+  transition: background t.$t-fast t.$ease;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 18px;
+    height: 2px;
+    background: var(--c-ink);
+    transition: transform t.$t-base t.$ease;
+  }
+
+  &::before {
+    top: -6px;
+  }
+  &::after {
+    top: 6px;
+  }
+
+  &[data-open] {
+    background: transparent;
+
+    &::before {
+      transform: translateY(6px) rotate(45deg);
+    }
+    &::after {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+  }
+}
+
+/* ---------------- Tiroir mobile ---------------- */
+.drawer {
+  position: fixed;
+  inset: calc(var(--h-nav) + 1px) 0 0;
+  background: var(--c-bg);
+  overflow-y: auto;
+  padding: var(--s-6) 0 var(--s-9);
+  z-index: 59;
+
+  @include m.up(t.$bp-lg) {
+    display: none;
+  }
+}
+
+.drawerSection {
+  padding-bottom: var(--s-5);
+  margin-bottom: var(--s-5);
+  border-bottom: 1px solid var(--c-line-soft);
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  li a {
+    display: block;
+    padding: 9px 0;
+    font-size: var(--fs-base);
+    color: var(--c-ink-2);
+
+    @include m.focus-ring;
+  }
+}
+
+.drawerHead {
+  display: block;
+  @include m.label;
+  color: var(--c-flame);
+  margin-bottom: var(--s-3);
+
+  @include m.focus-ring;
+}
+
+.drawerCols {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--s-4);
+}
+
+.drawerCta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}

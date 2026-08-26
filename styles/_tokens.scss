@@ -1,0 +1,108 @@
+// =============================================================
+//  DESIGN TOKENS — univers inox / extraction cuisine pro
+//  Aucun style ici : uniquement des variables.
+// =============================================================
+
+// ---------- Breakpoints (utilisés par _mixins.scss) ----------
+$bp-xs: 480px;
+$bp-sm: 640px;
+$bp-md: 860px;
+$bp-lg: 1080px;
+$bp-xl: 1280px;
+
+// ---------- Largeurs de conteneur ----------
+$w-page: 1240px;
+$w-wide: 1440px;
+$w-prose: 68ch;
+
+// ---------- Rayons ----------
+$r-xs: 2px;
+$r-sm: 3px;
+$r-md: 5px;
+$r-lg: 8px;
+
+// ---------- Durées ----------
+$t-fast: 140ms;
+$t-base: 220ms;
+$t-slow: 420ms;
+$ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+
+:root {
+  // -------- Couleurs : encres --------
+  --c-ink: #0e1417; // noir bleuté
+  --c-ink-2: #2b373d;
+  --c-steel: #5f7178; // gris acier
+  --c-steel-2: #8ba0a7;
+
+  // -------- Couleurs : traits & fonds --------
+  --c-line: #d6dddf;
+  --c-line-soft: #e8eced;
+  --c-bg: #ffffff;
+  --c-bg-2: #f4f7f7; // inox pâle
+  --c-bg-3: #e8eeef;
+
+  // -------- Couleurs : blocs sombres (inox brossé) --------
+  --c-dark: #0e1417;
+  --c-dark-2: #18232a;
+  --c-dark-3: #22303880;
+  --c-on-dark: #e9eff0;
+  --c-on-dark-2: #a5b6bc;
+
+  // -------- Accent 1 : flamme oxydée (action, urgence) --------
+  --c-flame: #c2451b;
+  --c-flame-hi: #d95322;
+  --c-flame-dark: #9c3512;
+  --c-flame-soft: #fbede8;
+
+  // -------- Accent 2 : air (technique, schémas, flux) --------
+  --c-air: #12726b;
+  --c-air-hi: #17948b;
+  --c-air-soft: #e1f0ee;
+
+  // -------- Signal --------
+  --c-brass: #a8842b;
+  --c-brass-soft: #f7f0dd;
+
+  // -------- Ombres --------
+  --sh-sm: 0 1px 2px rgba(14, 20, 23, 0.06);
+  --sh-md: 0 1px 2px rgba(14, 20, 23, 0.05), 0 10px 26px -14px rgba(14, 20, 23, 0.22);
+  --sh-lg: 0 2px 4px rgba(14, 20, 23, 0.05), 0 24px 48px -24px rgba(14, 20, 23, 0.3);
+  --sh-focus: 0 0 0 3px rgba(194, 69, 27, 0.28);
+
+  // -------- Échelle typographique --------
+  --fs-2xs: 0.688rem; // 11px  — micro-labels
+  --fs-xs: 0.75rem; // 12px  — labels mono
+  --fs-sm: 0.844rem; // 13.5px
+  --fs-base: 1rem; // 16px
+  --fs-md: 1.063rem; // 17px  — texte courant
+  --fs-lg: 1.188rem; // 19px  — chapô
+  --fs-xl: clamp(1.375rem, 1.1rem + 0.9vw, 1.625rem);
+  --fs-2xl: clamp(1.625rem, 1.2rem + 1.5vw, 2.125rem);
+  --fs-3xl: clamp(2rem, 1.4rem + 2.6vw, 3.125rem);
+  --fs-4xl: clamp(2.375rem, 1.5rem + 3.8vw, 4.25rem);
+
+  // -------- Graisses & interlettrages --------
+  --lh-tight: 1.06;
+  --lh-snug: 1.25;
+  --lh-base: 1.62;
+  --ls-tight: -0.03em;
+  --ls-label: 0.14em;
+
+  // -------- Espacements (base 4) --------
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 44px;
+  --s-8: 60px;
+  --s-9: 80px;
+  --s-10: 104px;
+  --s-11: 136px;
+
+  // -------- Hauteurs de barres fixes --------
+  --h-topbar: 40px;
+  --h-nav: 68px;
+  --h-mobile-cta: 62px;
+}

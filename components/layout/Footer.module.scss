@@ -1,0 +1,136 @@
+@use "../../styles/tokens" as t;
+@use "../../styles/mixins" as m;
+
+.footer {
+  background: var(--c-dark);
+  color: var(--c-on-dark-2);
+  margin-top: auto;
+  padding-bottom: var(--h-mobile-cta);
+
+  @include m.up(t.$bp-md) {
+    padding-bottom: 0;
+  }
+}
+
+.top {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1.3fr 1fr;
+  gap: var(--s-7);
+  padding-block: var(--s-9) var(--s-8);
+
+  @include m.tablet-down {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-6);
+  }
+
+  @include m.down(t.$bp-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  align-items: flex-start;
+}
+
+.logoText {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--c-on-dark);
+
+  em {
+    font-style: normal;
+    color: var(--c-flame-hi);
+  }
+}
+
+.baseline {
+  font-size: var(--fs-sm);
+  max-width: 34ch;
+  line-height: 1.55;
+}
+
+.phone {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--c-on-dark);
+
+  @include m.focus-ring(var(--c-flame-hi));
+
+  &:hover {
+    color: var(--c-flame-hi);
+  }
+}
+
+.hours {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  line-height: 1.7;
+  color: var(--c-steel);
+}
+
+.col {
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+  }
+
+  li a {
+    font-size: var(--fs-sm);
+    color: var(--c-on-dark-2);
+    transition: color t.$t-fast t.$ease;
+
+    @include m.focus-ring(var(--c-flame-hi));
+
+    &:hover {
+      color: var(--c-on-dark);
+    }
+  }
+}
+
+.colHead {
+  @include m.label;
+  color: var(--c-steel);
+  padding-bottom: var(--s-3);
+  margin-bottom: var(--s-4);
+  border-bottom: 1px solid #ffffff17;
+}
+
+.regionList {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-2) var(--s-4);
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+  padding-block: var(--s-5);
+  border-top: 1px solid #ffffff14;
+  font-size: var(--fs-xs);
+  font-family: var(--font-mono);
+  color: var(--c-steel);
+}
+
+.legal {
+  display: flex;
+  gap: var(--s-3);
+
+  a {
+    @include m.focus-ring(var(--c-flame-hi));
+
+    &:hover {
+      color: var(--c-on-dark);
+    }
+  }
+}

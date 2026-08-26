@@ -1,0 +1,140 @@
+@use "../../styles/tokens" as t;
+@use "../../styles/mixins" as m;
+
+/* ---------------- En-tête de page ---------------- */
+.hero {
+  background: linear-gradient(180deg, var(--c-bg-2), var(--c-bg));
+  border-bottom: 1px solid var(--c-line-soft);
+}
+
+.heroInner {
+  padding-block: var(--s-8) var(--s-7);
+  max-width: 1000px;
+  margin-inline: 0;
+
+  h1 {
+    @include m.display(var(--fs-3xl));
+    margin-block: var(--s-4) var(--s-4);
+    max-width: 20ch;
+  }
+
+  @include m.mobile {
+    padding-block: var(--s-6);
+  }
+}
+
+.lead {
+  font-family: var(--font-body);
+  font-size: var(--fs-lg);
+  line-height: 1.62;
+  color: var(--c-ink-2);
+  max-width: 62ch;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--c-line);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+/* ---------------- Corps deux colonnes ---------------- */
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 356px;
+  gap: var(--s-9);
+  align-items: start;
+  padding-block: var(--s-9) var(--s-10);
+
+  @include m.tablet-down {
+    grid-template-columns: 1fr;
+    gap: var(--s-8);
+    padding-block: var(--s-7) var(--s-8);
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-9);
+  min-width: 0;
+
+  @include m.mobile {
+    gap: var(--s-7);
+  }
+}
+
+.aside {
+  min-width: 0;
+
+  @include m.tablet-down {
+    max-width: 460px;
+  }
+}
+
+.asideSticky {
+  position: sticky;
+  top: calc(var(--h-nav) + var(--s-4));
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+
+  @include m.tablet-down {
+    position: static;
+  }
+}
+
+.callCard {
+  padding: var(--s-5);
+  background: var(--c-dark);
+  color: var(--c-on-dark);
+  border-radius: t.$r-md;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.callKicker {
+  @include m.label;
+  color: var(--c-flame-hi);
+}
+
+.callNumber {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--c-on-dark);
+
+  @include m.focus-ring(var(--c-flame-hi));
+
+  &:hover {
+    color: var(--c-flame-hi);
+  }
+}
+
+.callHours {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  line-height: 1.7;
+  color: var(--c-steel);
+}
+
+/* ---------------- Page étroite ---------------- */
+.narrow {
+  padding-block: var(--s-9) var(--s-10);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-7);
+
+  @include m.mobile {
+    padding-block: var(--s-7) var(--s-8);
+  }
+}
