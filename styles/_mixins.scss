@@ -74,7 +74,9 @@
   &:focus-visible {
     outline: 2px solid $color;
     outline-offset: 3px;
-    border-radius: t.$r-xs;
+    // Surtout pas de border-radius ici : le contour suit déjà celui de
+    // l'élément. En forcer un déformait au focus clavier la forme des boutons,
+    // des cartes et des pastilles.
   }
 }
 
