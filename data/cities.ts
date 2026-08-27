@@ -69,7 +69,6 @@ const tier1Cities: City[] = [
       title: "Restaurant de 60 couverts, 11e arrondissement",
       body: "Établissement repris trois ans plus tôt, aucun historique d'entretien du conduit. Le repérage a révélé un conduit remontant sur cinq étages dans une gaine technique, sans aucune trappe de visite. Nous avons traité les huit premiers mètres depuis la hotte et les quatre derniers depuis la toiture, après accord du syndic obtenu en trois semaines. Le rapport a explicitement mentionné les vingt mètres intermédiaires non atteignables, et proposé la pose de deux trappes lors du prochain passage. L'exploitant a pu transmettre un document exact à son assureur.",
     },
-    services: ["nettoyage-hotte-restaurant", "ramonage-hotte-restaurant", "degraissage-hotte-restaurant", "nettoyage-conduit-extraction", "depannage-hotte-restaurant", "remplacement-courroie-hotte-professionnelle"],
     faq: [
       {
         q: "Comment intervenir dans un restaurant parisien sans local technique ?",
@@ -143,7 +142,6 @@ const tier1Cities: City[] = [
       title: "Bouchon traditionnel, Vieux Lyon",
       body: "Conduit maçonné d'origine, section irrégulière, quatre coudes sur douze mètres. Le rotobrossage standard était inutilisable sans risque pour la maçonnerie. Nous avons procédé par traitement chimique prolongé avec temps de contact étendu, puis retrait mécanique manuel depuis les deux extrémités et une trappe existante à mi-hauteur. L'intervention a demandé une journée complète contre une demi-journée sur un conduit métallique équivalent — écart annoncé au devis après repérage, pas découvert sur place.",
     },
-    services: ["nettoyage-hotte-restaurant", "ramonage-hotte-restaurant", "degraissage-hotte-restaurant", "nettoyage-conduit-extraction", "depannage-hotte-restaurant", "remplacement-courroie-hotte-professionnelle"],
     faq: [
       {
         q: "Peut-on ramoner un conduit maçonné ancien sans l'abîmer ?",
@@ -214,7 +212,6 @@ const tier1Cities: City[] = [
       title: "Pizzeria au feu de bois, 6e arrondissement",
       body: "L'exploitant avait fait traiter la hotte de son piano de cuisson par un prestataire généraliste et pensait son installation en règle. Le diagnostic a mis en évidence un second conduit, celui du four à bois, jamais entretenu depuis l'ouverture huit ans plus tôt. Les deux réseaux ont été traités lors de la même intervention, avec deux méthodes distinctes et deux sections séparées dans le rapport — un point que son assureur avait précisément demandé de clarifier.",
     },
-    services: ["nettoyage-hotte-restaurant", "ramonage-hotte-restaurant", "degraissage-hotte-restaurant", "depannage-hotte-restaurant", "remplacement-courroie-hotte-professionnelle"],
     faq: [
       {
         q: "Ma pizzeria a un four à bois : faut-il traiter deux conduits ?",
@@ -283,7 +280,6 @@ const tier1Cities: City[] = [
       title: "Bar à vins avec cuisine, quartier des Chartrons",
       body: "Établissement de 40 couverts installé dans un immeuble XVIIIe, hotte unique, conduit remontant en façade arrière. La demande initiale portait sur un simple nettoyage de hotte. Le diagnostic a montré un plénum chargé et une entrée de conduit fortement réduite, expliquant la perte d'aspiration signalée depuis un an. Nous avons traité l'ensemble en une intervention de six heures un lundi de fermeture, puis établi un plan d'entretien à deux passages annuels : le second passage, six mois plus tard, a demandé moitié moins de temps.",
     },
-    services: ["nettoyage-hotte-restaurant", "ramonage-hotte-restaurant", "depannage-hotte-restaurant"],
     faq: [
       {
         q: "Mon local est en secteur sauvegardé : puis-je faire poser des trappes de visite ?",
@@ -350,7 +346,6 @@ const tier1Cities: City[] = [
       title: "Restaurant d'entreprise, zone aéroportuaire de Blagnac",
       body: "Cuisine de production de 900 couverts quotidiens, quatre hottes, réseau d'extraction de plus de quarante mètres avec deux caissons. Le service technique demandait un « ramonage » ; le besoin réel était une remise à niveau complète du système, hotte comprise. Nous avons chiffré les deux périmètres séparément pour que la décision soit prise en connaissance de cause, puis réalisé l'intervention complète sur trois nuits consécutives, sans interruption du service de midi.",
     },
-    services: ["nettoyage-hotte-restaurant", "ramonage-hotte-restaurant", "depannage-hotte-restaurant"],
     faq: [
       {
         q: "Nettoyage, dégraissage ou ramonage : de quoi ai-je besoin ?",
@@ -419,7 +414,6 @@ const tier1Cities: City[] = [
       title: "Groupe de restauration, 7 établissements sur la métropole",
       body: "Sept sites répartis entre Lille, Roubaix, Villeneuve-d'Ascq et Marcq-en-Barœul, entretenus jusque-là par quatre prestataires différents, sans historique commun. Nous avons commencé par un diagnostic de l'ensemble du parc, puis établi un état consolidé : date de dernière intervention, périmètre traité, réserves ouvertes et échéance suivante pour chaque site. Trois établissements présentaient un conduit jamais traité. Le plan d'entretien mis en place depuis fonctionne avec un interlocuteur unique et un reporting trimestriel.",
     },
-    services: ["nettoyage-hotte-restaurant", "ramonage-hotte-restaurant", "depannage-hotte-restaurant"],
     faq: [
       {
         q: "Que contient exactement l'attestation d'entretien que vous remettez ?",

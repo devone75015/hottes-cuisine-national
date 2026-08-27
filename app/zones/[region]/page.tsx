@@ -8,7 +8,7 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { Cover } from "@/components/ui/Cover";
 import { citiesInRegion } from "@/data/cities";
 import { getRegion, regionSlugs } from "@/data/regions";
-import { pillars } from "@/data/services";
+import { pillars, servicesForCity } from "@/data/services";
 import { buildMetadata, faqJsonLd, serviceJsonLd } from "@/lib/seo";
 import s from "./region.module.scss";
 
@@ -108,10 +108,10 @@ export default async function RegionPage({ params }: PageProps<"/zones/[region]"
                   <p className={s.cityName}>{c.name}</p>
                   <p className={s.cityEpci}>{c.epci}</p>
                   <ul className={s.cityServices}>
-                    {c.services.map((svSlug) => (
-                      <li key={svSlug}>
-                        <Link href={`/${svSlug}/${c.slug}/`}>
-                          {svSlug.replaceAll("-", " ")} {c.prep}
+                    {servicesForCity(c.slug).map((sv) => (
+                      <li key={sv.slug}>
+                        <Link href={`/${sv.slug}/${c.slug}/`}>
+                          {sv.h1} {c.prep}
                         </Link>
                       </li>
                     ))}

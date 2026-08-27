@@ -63,7 +63,6 @@ export const extraCities: City[] = [
       title: "Restaurant de 90 couverts, Île de Nantes",
       body: "Établissement ouvert au début des années 2010, entretien du réseau réalisé régulièrement, aucun contrôle mécanique depuis l'installation. L'exploitant signalait une baisse d'aspiration progressive et un sifflement au démarrage. Le diagnostic a écarté l'encrassement — le réseau était propre — pour identifier une courroie fortement détendue et des poulies marquées. Remplacement de la courroie, reprise de l'alignement, contrôle des roulements : aspiration restituée en une intervention de deux heures. Le rapport a établi un plan de contrôle mécanique annuel, jusque-là inexistant.",
     },
-    services: ["nettoyage-hotte-restaurant", "ramonage-hotte-restaurant", "depannage-hotte-restaurant"],
     faq: [
       {
         q: "Mon réseau est propre mais l'aspiration a baissé, est-ce normal ?",
@@ -130,7 +129,6 @@ export const extraCities: City[] = [
       title: "Winstub, secteur de la Petite France",
       body: "Cuisine installée dans un bâtiment à colombages, conduit passant dans une structure ancienne sans aucune trappe. L'exploitant nous appelait pour un arrêt complet de l'extraction. Le diagnostic a écarté le moteur et identifié une turbine bloquée par un dépôt durci, dans un caisson que la configuration rendait difficile d'accès. Nettoyage de la turbine, contrôle des roulements, remise en service le jour même. Le rapport a signalé l'absence d'accès au conduit comme réserve, avec un devis distinct pour la pose de trappes soumise à autorisation préalable.",
     },
-    services: ["nettoyage-hotte-restaurant", "ramonage-hotte-restaurant", "depannage-hotte-restaurant"],
     faq: [
       {
         q: "Mon local est en secteur sauvegardé, cela limite-t-il l'intervention ?",
@@ -197,7 +195,6 @@ export const extraCities: City[] = [
       title: "Restaurant de plage, secteur Promenade",
       body: "Arrêt complet de l'extraction un vendredi de juillet, en plein service du soir. Le diagnostic a identifié une rupture de courroie sur un extracteur dont la turbine était fortement chargée : la surcharge avait accéléré l'usure de la transmission. Remplacement de la courroie le soir même pour permettre la reprise du service, puis nettoyage de la turbine programmé le lundi suivant, jour de moindre activité. Sans ce second passage, la courroie neuve aurait subi la même contrainte et cédé à son tour.",
     },
-    services: ["nettoyage-hotte-restaurant", "ramonage-hotte-restaurant", "depannage-hotte-restaurant"],
     faq: [
       {
         q: "Ma hotte est tombée en panne en pleine saison, quel délai ?",

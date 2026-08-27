@@ -203,7 +203,7 @@ const coreServices: Service[] = [
       "nettoyage-filtres-hotte",
       "entretien-hotte-professionnelle",
     ],
-    cityPages: ["paris", "lyon", "marseille", "toulouse", "bordeaux", "lille"],
+    cityPages: ["paris", "lyon", "marseille", "toulouse", "bordeaux", "lille", "nantes", "strasbourg", "nice"],
     localAngle: [
       "Sur le terrain, la demande la plus fréquente ne porte pas sur un problème technique mais sur une contrainte d'exploitation : trouver le créneau. Une cuisine de restaurant ne s'arrête pas, et l'intervention doit se glisser entre deux services sans laisser la moindre trace au moment de la reprise.",
       "C'est ce qui nous impose une méthode stricte de protection et de remise en état. Le poste de cuisson est bâché avant toute opération, les filtres partent en bac pendant que le caisson est traité, et la cuisine est rendue testée : aspiration vérifiée, éclairage remonté, plans dégagés. Vous ne devez avoir aucune reprise de nettoyage à faire derrière nous.",
@@ -792,7 +792,7 @@ const coreServices: Service[] = [
       },
     ],
     related: ["ramonage-hotte-professionnelle", "ramonage-conduit-hotte", "nettoyage-hotte-restaurant", "degraissage-hotte-restaurant", "entretien-hotte-professionnelle"],
-    cityPages: ["paris", "lyon", "marseille", "toulouse", "bordeaux", "lille"],
+    cityPages: ["paris", "lyon", "marseille", "toulouse", "bordeaux", "lille", "nantes", "strasbourg", "nice"],
     localAngle: [
       "Une demande de ramonage arrive rarement spontanément. Elle est presque toujours déclenchée par un tiers : un assureur qui réclame un justificatif, un bureau de contrôle avant une visite, ou un repreneur qui découvre un réseau sans historique. La question n'est donc pas seulement technique, elle est documentaire.",
       "C'est pourquoi nous demandons, avant l'intervention, les exigences exactes figurant dans votre contrat. Les compagnies n'attendent pas toutes le même niveau de détail, et un document techniquement irréprochable mais au mauvais format devra être refait. Nous adaptons l'attestation à ce qui vous est réellement demandé.",
@@ -1390,6 +1390,18 @@ export const pillarLabels: Record<Service["pillar"], string> = {
   extraction: "Extraction",
   reparation: "Réparation",
 };
+
+/**
+ * Prestations réellement publiées pour une ville donnée.
+ *
+ * Cette information était auparavant recopiée à la main dans `city.services`.
+ * Les deux listes ont divergé dès l'ajout de Nantes, Strasbourg et Nice : les
+ * pages régionales pointaient vers six pages qui n'existaient pas. Elle est
+ * désormais dérivée du registre — la divergence est devenue impossible.
+ */
+export function servicesForCity(citySlug: string): Service[] {
+  return services.filter((s) => (s.cityPages ?? []).includes(citySlug));
+}
 
 /** Couples prestation + ville réellement publiés — alimente generateStaticParams. */
 export function serviceCityPairs(): { service: string; city: string }[] {

@@ -8,7 +8,8 @@
     "preview": "npx --yes serve out -p 3000",
     "lint": "eslint",
     "audit:seo": "node scripts/seo-audit.mjs",
-    "check": "next build && node scripts/seo-audit.mjs"
+    "preflight": "node scripts/preflight.mjs",
+    "check": "next build && node scripts/seo-audit.mjs && node scripts/preflight.mjs"
   },
   "dependencies": {
     "@types/node": "^20",

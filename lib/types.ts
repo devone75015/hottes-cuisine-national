@@ -97,8 +97,6 @@ export interface City {
   dominantEstablishments: string[];
   /** Exemple d'intervention anonymisé, unique à cette ville. */
   caseStudy: { title: string; body: string };
-  /** Prestations déclinées en page prestation + ville. */
-  services: string[];
   faq: Faq[];
 }
 

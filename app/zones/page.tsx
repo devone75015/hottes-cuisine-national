@@ -6,6 +6,7 @@ import { CtaBand, ProofBar } from "@/components/ui/Blocks";
 import { Reveal } from "@/components/ui/Reveal";
 import { Cover, Thumb } from "@/components/ui/Cover";
 import { cities } from "@/data/cities";
+import { servicesForCity } from "@/data/services";
 import { regions, totalDepartments } from "@/data/regions";
 import { buildMetadata } from "@/lib/seo";
 import s from "./zones.module.scss";
@@ -87,8 +88,9 @@ export default function ZonesPage() {
                     {c.departmentCode} · {c.department}
                   </span>
                   <span className={s.cityServices}>
-                    {c.services.length} prestation{c.services.length > 1 ? "s" : ""} détaillée
-                    {c.services.length > 1 ? "s" : ""}
+                    {servicesForCity(c.slug).length} prestation
+                    {servicesForCity(c.slug).length > 1 ? "s" : ""} détaillée
+                    {servicesForCity(c.slug).length > 1 ? "s" : ""}
                   </span>
                 </Link>
               </li>
