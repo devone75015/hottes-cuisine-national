@@ -1,16 +1,17 @@
-"use server";
-
 /**
- * Réception des demandes de devis.
+ * Envoi des demandes de devis et de dépannage.
  *
- * ÉTAT ACTUEL : la fonction valide et journalise le lead côté serveur.
- * À BRANCHER avant mise en production — au choix :
- *   - envoi e-mail transactionnel (Resend, Postmark, Brevo…)
- *   - création d'une fiche dans le CRM
- *   - webhook vers l'outil de suivi commercial
+ * ⚠ CHANGEMENT D'ARCHITECTURE — export statique
  *
- * Le lead partiel (étape 1) est enregistré séparément : un prospect qui
- * abandonne à l'étape 2 doit rester rappelable (§21 du cadrage).
+ * Ce module était une Server Action (`"use server"`). Les Server Actions
+ * exigent un serveur Node : elles sont incompatibles avec `output: "export"`.
+ * L'envoi se fait donc désormais depuis le navigateur, vers un point de
+ * réception HTTP.
+ *
+ * La validation reste ici, côté client, pour le confort de saisie — mais elle
+ * n'a plus aucune valeur de sécurité : n'importe qui peut poster directement
+ * sur l'endpoint. C'est le point de réception qui doit valider et filtrer,
+ * pas ce fichier. Voir `public/api/lead.php`.
  */
 
 export type LeadStage = "partial" | "complete";
@@ -36,7 +37,7 @@ export interface LeadPayload {
   /** Page d'origine — sert à l'attribution SEO / Ads. */
   source?: string;
 
-  /* ---- Champs propres au dépannage (§14 du brief réparation) ---- */
+  /* ---- Champs propres au dépannage ---- */
   /** Nature de la panne — plusieurs symptômes peuvent coexister. */
   symptoms?: string[];
   /** Arrêt complet ou fonctionnement dégradé : détermine la priorité. */
@@ -52,33 +53,69 @@ export interface LeadResult {
   error?: string;
 }
 
+/**
+ * Point de réception des demandes.
+ *
+ * Par défaut `/api/lead.php`, livré dans `public/api/` et donc présent dans
+ * `out/api/lead.php` après le build — il fonctionne tel quel sur un
+ * hébergement mutualisé Hostinger, qui exécute PHP.
+ *
+ * Pour utiliser un service tiers (Formspree, Brevo, Web3Forms…), définir
+ * NEXT_PUBLIC_FORM_ENDPOINT au build avec l'URL complète.
+ */
+const ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT || "/api/lead.php";
+
 const PHONE_RE = /^(?:\+33|0)\s?[1-9](?:[\s.-]?\d{2}){4}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-export async function submitLead(payload: LeadPayload): Promise<LeadResult> {
+function validate(payload: LeadPayload): string | null {
   if (!payload.phone || !PHONE_RE.test(payload.phone.trim())) {
-    return { ok: false, error: "Merci d'indiquer un numéro de téléphone valide." };
+    return "Merci d'indiquer un numéro de téléphone valide.";
   }
-
   if (!payload.city?.trim()) {
-    return { ok: false, error: "Merci d'indiquer la ville de votre établissement." };
+    return "Merci d'indiquer la ville de votre établissement.";
   }
-
   if (payload.stage === "complete") {
     if (!payload.email || !EMAIL_RE.test(payload.email.trim())) {
-      return { ok: false, error: "Merci d'indiquer une adresse e-mail valide." };
+      return "Merci d'indiquer une adresse e-mail valide.";
     }
     if (!payload.name?.trim()) {
-      return { ok: false, error: "Merci d'indiquer votre nom." };
+      return "Merci d'indiquer votre nom.";
     }
   }
+  return null;
+}
 
-  // TODO — brancher l'envoi réel ici (e-mail transactionnel / CRM / webhook).
-  //
-  // ⚠ Les demandes `kind: "repair"` avec `state` = arrêt complet doivent être
-  // routées en priorité : ce sont des cuisines à l'arrêt. Prévoir une alerte
-  // distincte (SMS ou notification) plutôt qu'un simple e-mail en file.
-  console.info("[lead]", payload.kind ?? "quote", payload.stage, JSON.stringify(payload));
+export async function submitLead(payload: LeadPayload): Promise<LeadResult> {
+  const invalid = validate(payload);
+  if (invalid) return { ok: false, error: invalid };
 
-  return { ok: true };
+  try {
+    const res = await fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...payload,
+        // Horodatage côté client, à titre indicatif seulement : le point de
+        // réception doit reposer sur sa propre horloge.
+        submittedAt: new Date().toISOString(),
+      }),
+    });
+
+    if (!res.ok) {
+      return {
+        ok: false,
+        error:
+          "Votre demande n'a pas pu être transmise. Appelez-nous directement, c'est le plus rapide.",
+      };
+    }
+
+    return { ok: true };
+  } catch {
+    return {
+      ok: false,
+      error:
+        "Connexion impossible. Vérifiez votre réseau, ou appelez-nous directement.",
+    };
+  }
 }

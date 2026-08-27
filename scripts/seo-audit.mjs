@@ -22,7 +22,8 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join, relative, sep } from "node:path";
 
-const BUILD_DIR = ".next/server/app";
+// Export statique : le HTML final se trouve dans out/, pas dans .next/.
+const BUILD_DIR = "out";
 const SIMILARITY_MAX = 0.55;
 const MIN_WORDS_LOCAL = 350;
 const NGRAM = 5;
@@ -130,9 +131,16 @@ const warnings = [];
 const pages = [];
 for await (const file of walk(BUILD_DIR)) {
   const html = await readFile(file, "utf8");
-  // Ignore les pages d'erreur générées par le framework.
-  if (/[\\/](_not-found|_global-error|40\d)\.html$/.test(file)) continue;
-  pages.push(parse(html, relative(BUILD_DIR, file).split(sep).join("/")));
+  const rel = relative(BUILD_DIR, file).split(sep).join("/");
+  const route = rel.replace(/\/index\.html$/, "/").replace(/^index\.html$/, "/");
+
+  // Pages d'erreur du framework. En export statique elles existent sous
+  // plusieurs formes — 404.html, 404/index.html, _not-found/ — toutes
+  // identiques entre elles : sans ce filtre, l'audit les signale à juste titre
+  // comme du contenu dupliqué, ce qui masquerait les vrais problèmes.
+  if (/^(404|_not-found|_global-error)(\/|\.html$|$)/.test(route)) continue;
+
+  pages.push(parse(html, route));
 }
 
 console.log(`\n  Audit SEO — ${pages.length} pages analysées\n`);
@@ -196,7 +204,7 @@ for (let i = 0; i < fingerprints.length; i++) {
 
 /* --- 6 : volume de texte sur les pages locales ----------------------------- */
 for (const p of pages) {
-  const isLocal = p.file.includes("/") && !p.file.startsWith("zones/");
+  const isLocal = p.file !== "/" && p.file.split("/").filter(Boolean).length >= 2 && !p.file.startsWith("zones/");
   const words = p.text.split(/\s+/).length;
   if (isLocal && words < MIN_WORDS_LOCAL) {
     errors.push(`[page locale trop courte : ${words} mots] ${p.file}`);

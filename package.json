@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "node server.js",
+    "preview": "npx --yes serve out -p 3000",
     "lint": "eslint",
     "audit:seo": "node scripts/seo-audit.mjs",
     "check": "next build && node scripts/seo-audit.mjs"

@@ -3,6 +3,11 @@ import { articles } from "@/data/articles";
 import { regions } from "@/data/regions";
 import { services, serviceCityPairs } from "@/data/services";
 import { absoluteUrl } from "@/lib/site";
+/**
+ * Requis par `output: "export"` : ce fichier est un route handler, il faut
+ * déclarer explicitement qu'il est calculable au build.
+ */
+export const dynamic = "force-static";
 
 /**
  * Sitemap.

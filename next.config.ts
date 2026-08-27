@@ -1,9 +1,10 @@
 import type { NextConfig } from "next";
 
 /**
- * NEXT_PUBLIC_SITE_URL est inlinée AU BUILD, pas lue à l'exécution : toutes les
- * pages étant prégénérées, les balises canonical et og:image sont figées dans
- * le HTML. La définir uniquement au runtime n'aurait donc aucun effet.
+ * NEXT_PUBLIC_SITE_URL est inlinée AU BUILD, pas lue à l'exécution : le site
+ * étant entièrement prégénéré, les balises canonical et og:image ainsi que le
+ * sitemap sont figés dans les fichiers produits. La définir après coup
+ * n'aurait aucun effet.
  *
  * Sans elle, le site se déclare sur le domaine de démonstration et Google
  * indexerait des canonical fausses. On le signale ici, et l'audit SEO le bloque
@@ -15,7 +16,7 @@ if (process.env.NODE_ENV === "production" && !process.env.NEXT_PUBLIC_SITE_URL) 
       "",
       "  ⚠  NEXT_PUBLIC_SITE_URL n'est pas définie.",
       "     Les canonical et les og:image porteront le domaine de démonstration.",
-      "     Définissez-la dans hPanel AVANT que le build ne soit lancé.",
+      "     Définissez-la AVANT de lancer le build.",
       "",
     ].join("\n"),
   );
@@ -23,9 +24,20 @@ if (process.env.NODE_ENV === "production" && !process.env.NEXT_PUBLIC_SITE_URL) 
 
 const nextConfig: NextConfig = {
   /**
-   * L'architecture d'URL définie au cadrage utilise le slash final
-   * (/nettoyage-hotte-restaurant/lyon/). Sans cette option, chaque lien
-   * interne déclencherait une redirection 308 — coûteuse en crawl.
+   * EXPORT STATIQUE — `next build` produit un dossier `out/` prêt à être
+   * déposé sur n'importe quel hébergement web, sans processus Node.
+   *
+   * Le site s'y prête : les 96 pages sont déjà toutes prégénérées et aucune
+   * ne dépend de la requête. Contrepartie assumée : plus de Server Actions,
+   * le formulaire poste vers un point de réception externe (voir lib/lead.ts).
+   */
+  output: "export",
+
+  /**
+   * Slash final : l'architecture d'URL du cadrage l'utilise
+   * (/nettoyage-hotte-restaurant/lyon/). En export, cette option produit
+   * `out/…/index.html` plutôt que `out/….html` — c'est la structure qu'attend
+   * un serveur Apache ou Nginx classique.
    */
   trailingSlash: true,
 
@@ -34,21 +46,16 @@ const nextConfig: NextConfig = {
   },
 
   images: {
-    // AVIF d'abord, WebP en repli (§27 du cadrage).
-    formats: ["image/avif", "image/webp"],
-    // Visuels d'illustration hébergés par Pexels (licence commerciale libre).
-    // À remplacer par les photos d'intervention du client dès qu'elles existent.
-    remotePatterns: [{ protocol: "https", hostname: "images.pexels.com" }],
+    /**
+     * L'optimiseur intégré exige un serveur : il n'existe pas en export.
+     * On délègue le redimensionnement à Pexels lui-même via un chargeur
+     * personnalisé, ce qui vaut mieux que `unoptimized: true`.
+     */
+    loader: "custom",
+    loaderFile: "./lib/imageLoader.ts",
   },
 
   poweredByHeader: false,
-
-  /**
-   * Hostinger place un reverse proxy devant le processus Node. La compression
-   * y est déjà assurée : la refaire côté applicatif consommerait du CPU pour
-   * rien sur un hébergement mutualisé.
-   */
-  compress: false,
 };
 
 export default nextConfig;

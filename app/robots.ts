@@ -1,5 +1,10 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
+/**
+ * Requis par `output: "export"` : ce fichier est un route handler, il faut
+ * déclarer explicitement qu'il est calculable au build.
+ */
+export const dynamic = "force-static";
 
 export default function robots(): MetadataRoute.Robots {
   return {
