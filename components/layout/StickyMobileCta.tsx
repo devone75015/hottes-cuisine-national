@@ -7,18 +7,27 @@ import s from "./StickyMobileCta.module.scss";
 
 /**
  * Barre d'appel fixe mobile (§21 du cadrage).
- * Apparaît après 25 % de scroll pour ne pas masquer le hero.
+ *
+ * Elle apparaît dès le premier pixel de défilement. Le seuil précédent — 12 %
+ * de la hauteur de page — la retenait très longtemps sur les pages longues :
+ * sur une page ville, 12 % représentent plusieurs écrans, et le prospect
+ * pouvait lire une bonne partie du contenu sans jamais voir le bouton d'appel.
+ *
+ * Elle reste masquée tout en haut de page, où le hero porte déjà ses propres
+ * boutons : l'afficher là ferait doublon et masquerait l'accroche.
  */
 export function StickyMobileCta() {
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
     function onScroll() {
-      const h = document.documentElement;
-      const max = h.scrollHeight - h.clientHeight;
-      setShown(max > 0 && h.scrollTop / max > 0.12);
+      setShown(window.scrollY > 0);
     }
+
+    // Appel immédiat : au retour en arrière, le navigateur restaure la
+    // position de défilement sans émettre d'événement scroll.
     onScroll();
+
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
