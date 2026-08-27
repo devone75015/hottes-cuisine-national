@@ -124,6 +124,10 @@ export function RepairForm({ defaultCity }: { defaultCity?: string }) {
           <a href={`tel:${site.phone.href}`} className="btn btn--block">
             Appeler le {site.phone.display}
           </a>
+          <p className={s.note}>
+            Photos ou vidéo de la panne :{" "}
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+          </p>
         </div>
       </div>
     );

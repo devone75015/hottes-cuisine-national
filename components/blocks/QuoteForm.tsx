@@ -123,6 +123,11 @@ export function QuoteForm({
           <a href={`tel:${site.phone.href}`} className="btn btn--block">
             Appeler le {site.phone.display}
           </a>
+          <p className={s.note}>
+            Vous pouvez aussi nous écrire à{" "}
+            <a href={`mailto:${site.email}`}>{site.email}</a> — c&apos;est là que vous
+            enverrez vos photos d&apos;installation.
+          </p>
         </div>
       </div>
     );

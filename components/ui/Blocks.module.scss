@@ -432,3 +432,21 @@
     transform: scale(1.04);
   }
 }
+
+/* ---------------- E-mail du bandeau de conversion ---------------- */
+.ctaMail {
+  display: block;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--c-on-dark-2);
+  word-break: break-all;
+  margin-top: var(--s-1);
+  transition: color t.$t-fast t.$ease;
+
+  @include m.focus-ring(var(--c-flame-hi));
+
+  &:hover {
+    color: #fff;
+  }
+}

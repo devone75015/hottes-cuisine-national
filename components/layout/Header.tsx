@@ -49,7 +49,9 @@ export function Header() {
             Spécialiste hotte, conduit et extraction de cuisine professionnelle
           </p>
           <div className={s.topbarRight}>
-            <span>{site.promise.coverage}</span>
+            <a href={`mailto:${site.email}`} className={s.topbarMail}>
+              {site.email}
+            </a>
             <span className={s.dot} aria-hidden="true" />
             <span>{site.hours}</span>
           </div>
@@ -203,6 +205,9 @@ export function Header() {
             <div className={s.drawerCta}>
               <a href={`tel:${site.phone.href}`} className="btn btn--block">
                 Appeler le {site.phone.display}
+              </a>
+              <a href={`mailto:${site.email}`} className={s.drawerMail}>
+                {site.email}
               </a>
               <Link href="/devis-nettoyage-hotte/" className="btn btn--ghost btn--block">
                 Demander un devis

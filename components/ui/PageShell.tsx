@@ -56,6 +56,9 @@ export function PageBody({
             <a href={`tel:${site.phone.href}`} className={s.callNumber}>
               {site.phone.display}
             </a>
+            <a href={`mailto:${site.email}`} className={s.callMail}>
+              {site.email}
+            </a>
             <p className={s.callHours}>
               {site.hours}
               <br />

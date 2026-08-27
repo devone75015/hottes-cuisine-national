@@ -134,3 +134,18 @@
     }
   }
 }
+
+/* ---------------- Adresse e-mail ---------------- */
+.email {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--c-on-dark-2);
+  word-break: break-all;
+  transition: color t.$t-fast t.$ease;
+
+  @include m.focus-ring(var(--c-flame-hi));
+
+  &:hover {
+    color: var(--c-flame-hi);
+  }
+}

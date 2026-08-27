@@ -20,6 +20,9 @@ export function Footer() {
           <a href={`tel:${site.phone.href}`} className={s.phone}>
             {site.phone.display}
           </a>
+          <a href={`mailto:${site.email}`} className={s.email}>
+            {site.email}
+          </a>
           <p className={s.hours}>
             {site.hours}
             <br />

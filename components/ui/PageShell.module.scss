@@ -138,3 +138,18 @@
     padding-block: var(--s-7) var(--s-8);
   }
 }
+
+/* ---------------- E-mail de la carte de contact ---------------- */
+.callMail {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--c-on-dark-2);
+  word-break: break-all;
+  transition: color t.$t-fast t.$ease;
+
+  @include m.focus-ring(var(--c-flame-hi));
+
+  &:hover {
+    color: var(--c-flame-hi);
+  }
+}

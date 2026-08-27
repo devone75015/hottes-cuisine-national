@@ -126,6 +126,9 @@ export function CtaBand({
           <Link href="/devis-nettoyage-hotte/" className="btn btn--lg btn--onDark">
             Demander un devis
           </Link>
+          <a href={`mailto:${site.email}`} className={s.ctaMail}>
+            {site.email}
+          </a>
           <p className={s.ctaHours}>{site.hours}</p>
         </div>
       </div>

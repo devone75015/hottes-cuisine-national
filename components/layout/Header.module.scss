@@ -340,3 +340,40 @@
   flex-direction: column;
   gap: var(--s-3);
 }
+
+/* ---------------- E-mail dans la barre du haut ---------------- */
+.topbarMail {
+  color: var(--c-on-dark-2);
+  text-transform: none;
+  letter-spacing: 0.01em;
+  transition: color t.$t-fast t.$ease;
+
+  @include m.focus-ring(var(--c-flame-hi));
+
+  &:hover {
+    color: #fff;
+  }
+
+  // En dessous de 1080 px la barre se resserre : l'adresse est longue et
+  // ferait déborder la ligne. Les horaires restent visibles.
+  @include m.tablet-down {
+    display: none;
+  }
+}
+
+/* ---------------- E-mail dans le tiroir mobile ---------------- */
+.drawerMail {
+  display: block;
+  text-align: center;
+  padding-top: var(--s-1);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--c-steel);
+  word-break: break-all;
+
+  @include m.focus-ring;
+
+  &:hover {
+    color: var(--c-flame);
+  }
+}
