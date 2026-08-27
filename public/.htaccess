@@ -62,8 +62,9 @@ ErrorDocument 404 /404.html
 #  même contenu : du duplicate créé par la configuration serveur, après tout
 #  le travail fait pour l'éviter dans le contenu.
 #
-#  ⚠ Décommentez UN SEUL des deux blocs www ci-dessous, selon la forme que
-#    vous retenez, et faites-la correspondre à NEXT_PUBLIC_SITE_URL.
+#  ⚠ La variante SANS www est active, cohérente avec lib/site.ts. Pour servir
+#    le site sur www, inversez : activez la variante A, désactivez la B, et
+#    changez NEXT_PUBLIC_SITE_URL en conséquence.
 # ---------------------------------------------------------------------------
 <IfModule mod_rewrite.c>
   RewriteEngine On
@@ -77,9 +78,9 @@ ErrorDocument 404 /404.html
   # RewriteCond %{HTTP_HOST} !^www\. [NC]
   # RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
 
-  # -- Variante B : tout sans www (décommentez si vous retenez le nu) -------
-  # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-  # RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+  # -- Variante B : tout sans www — ACTIVE, cohérente avec lib/site.ts ------
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
   # -- Ajouter le slash final sur les répertoires ---------------------------
   # /page  ->  /page/   pour que la canonique soit toujours atteinte.

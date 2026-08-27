@@ -13,7 +13,7 @@
  *   5. Similarité inter-pages sous le seuil (5-grammes, indice de Jaccard)
  *   6. Volume de texte minimum sur les pages locales
  *   7. Vocabulaire domestique interdit sur les pages ramonage
- *   8. Domaine canonique reel (NEXT_PUBLIC_SITE_URL definie au build)
+ *   8. Un seul et meme hote canonique sur tout le corpus
  *
  * Usage :  node scripts/seo-audit.mjs
  * Sortie :  code 1 si un contrôle bloquant échoue.
@@ -211,18 +211,38 @@ for (const p of pages) {
   }
 }
 
-/* --- 8 : le domaine canonique doit etre le vrai domaine -------------------- */
-// NEXT_PUBLIC_SITE_URL est inlinee au build. Si elle manquait, toutes les
-// canonical portent le domaine de demonstration : Google indexerait des URL
-// qui n'existent pas. C'est une erreur bloquante, pas un avertissement.
+/* --- 8 : un seul et meme domaine canonique --------------------------------- */
+// NEXT_PUBLIC_SITE_URL est inlinee au build. Deux defauts sont possibles et
+// tous deux invisibles a l'oeil nu :
+//   - le domaine de demonstration a survecu quelque part ;
+//   - deux formes du domaine coexistent (www et nu), ce qui revient a
+//     declarer deux sites servant le meme contenu.
 const PLACEHOLDER_HOST = "hottes-expert-france.fr";
-const onPlaceholder = pages.filter((p) => p.canonical?.includes(PLACEHOLDER_HOST));
-if (onPlaceholder.length) {
-  errors.push(
-    `[domaine de démonstration sur ${onPlaceholder.length} page(s)] ` +
-      `NEXT_PUBLIC_SITE_URL n'était pas définie au moment du build — ` +
-      `les canonical pointent vers ${PLACEHOLDER_HOST}`,
-  );
+
+const hosts = new Map();
+for (const p of pages) {
+  if (!p.canonical) continue;
+  try {
+    const h = new URL(p.canonical).host;
+    if (!hosts.has(h)) hosts.set(h, []);
+    hosts.get(h).push(p.file);
+  } catch {
+    errors.push(`[canonical malformée] ${p.file} → ${p.canonical}`);
+  }
+}
+
+for (const [host, files] of hosts) {
+  if (host.includes(PLACEHOLDER_HOST)) {
+    errors.push(
+      `[domaine de démonstration sur ${files.length} page(s)] ` +
+        `les canonical pointent vers ${host}`,
+    );
+  }
+}
+
+if (hosts.size > 1) {
+  const detail = [...hosts].map(([h, f]) => `${h} (${f.length})`).join(", ");
+  errors.push(`[plusieurs domaines canoniques] ${detail} — un seul hôte attendu`);
 }
 
 /* --- 7 : vocabulaire interdit sur les pages ramonage ----------------------- */

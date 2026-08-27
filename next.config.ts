@@ -15,8 +15,8 @@ if (process.env.NODE_ENV === "production" && !process.env.NEXT_PUBLIC_SITE_URL) 
     [
       "",
       "  ⚠  NEXT_PUBLIC_SITE_URL n'est pas définie.",
-      "     Les canonical et les og:image porteront le domaine de démonstration.",
-      "     Définissez-la AVANT de lancer le build.",
+      "     Le build utilise le domaine de repli déclaré dans lib/site.ts.",
+      "     Vérifiez que c'est bien le domaine servi — il est inliné dans le HTML.",
       "",
     ].join("\n"),
   );

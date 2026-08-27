@@ -9,16 +9,29 @@ export const site = {
   legalName: "Hottes Expert France", // TODO raison sociale réelle
   baseline: "Spécialiste national du nettoyage, dégraissage et ramonage des hottes de cuisine professionnelle",
 
-  /** Domaine de production — sert au canonical, au sitemap et au JSON-LD. */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.hottes-expert-france.fr",
+  /**
+   * Domaine de production — sert au canonical, au sitemap et au JSON-LD.
+   *
+   * ⚠ La forme retenue ici est SANS www, celle du domaine de l'adresse e-mail.
+   * Si le site doit être servi sur www, il faut changer cette valeur ET la
+   * règle correspondante dans public/.htaccess : les deux doivent désigner
+   * le même hôte, sinon Google voit deux sites servant le même contenu.
+   */
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://reparationhottecuisinenettoyage.fr",
 
-  /** Téléphone : affiché partout, cliquable. Un numéro de tracking par canal viendra s'y substituer. */
+  /**
+   * Téléphone : affiché partout, cliquable.
+   * `display` est au format national, celui qu'un restaurateur lit et compose.
+   * `href` est au format international : c'est le seul qui fonctionne de
+   * manière fiable depuis un mobile, y compris hors de France.
+   * Un numéro de tracking par canal viendra s'y substituer le moment venu.
+   */
   phone: {
-    display: "01 23 45 67 89", // TODO numéro réel
-    href: "+33123456789",
+    display: "07 56 93 11 11",
+    href: "+33756931111",
   },
 
-  email: "contact@hottes-expert-france.fr", // TODO
+  email: "devis@reparationhottecuisinenettoyage.fr",
 
   hours: "Du lundi au vendredi, 7h – 19h",
   emergency: "Interventions d'urgence 7j/7",

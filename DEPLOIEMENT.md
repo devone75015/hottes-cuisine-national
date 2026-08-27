@@ -11,7 +11,7 @@ aucune ne dépend de la requête.
 ## 1. Construire
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://www.votre-domaine-reel.fr npm run check
+NEXT_PUBLIC_SITE_URL=https://reparationhottecuisinenettoyage.fr npm run check
 ```
 
 `npm run check` enchaîne le build **et** l'audit SEO. Si l'audit échoue, ne
@@ -53,12 +53,16 @@ L'export statique supprime les Server Actions. Le formulaire poste désormais en
 JavaScript vers **`/api/lead.php`**, livré dans `out/api/lead.php` et exécuté
 par PHP sur l'hébergement mutualisé.
 
-**Avant la mise en ligne, éditez `public/api/lead.php` :**
+Les constantes sont déjà renseignées :
 
 ```php
-const DEST_EMAIL     = 'contact@votre-domaine.fr';     // adresse de réception
-const ALLOWED_ORIGIN = 'https://www.votre-domaine.fr'; // domaine réel
+const DEST_EMAIL     = 'devis@reparationhottecuisinenettoyage.fr';
+const ALLOWED_ORIGIN = 'https://reparationhottecuisinenettoyage.fr';
 ```
+
+`ALLOWED_ORIGIN` doit correspondre **exactement** à la forme servie du domaine.
+Si vous basculez sur `www`, changez-la ici aussi, sinon toutes les demandes
+seront rejetées en 403.
 
 Ce script valide côté serveur, neutralise l'injection d'en-têtes, journalise
 chaque demande dans `leads.log` puis envoie un courriel. Il répond `ok` même si
@@ -83,15 +87,26 @@ NEXT_PUBLIC_FORM_ENDPOINT=https://formspree.io/f/xxxxxx
 Rattachez le domaine dans **hPanel → Domaines**, activez le SSL (Let's Encrypt,
 inclus).
 
-Le domaine servi doit être **identique** à `NEXT_PUBLIC_SITE_URL`, `www`
-compris : `www.exemple.fr` et `exemple.fr` sont deux hôtes différents pour
-Google.
+**La forme retenue est SANS `www`** — celle du domaine de l'adresse e-mail :
 
-Le `.htaccess` livré force HTTPS et ajoute le slash final. **Il contient deux
-blocs `www` commentés — décommentez-en un seul**, celui qui correspond à la
-forme que vous retenez. Sans cela, les deux formes restent accessibles et
-servent le même contenu : du duplicate créé par la configuration serveur, après
-tout le travail fait pour l'éviter dans le contenu.
+```
+https://reparationhottecuisinenettoyage.fr
+```
+
+Trois endroits doivent désigner le même hôte, sans quoi Google verra deux sites
+servant le même contenu :
+
+| Où | Valeur |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` au build | `https://reparationhottecuisinenettoyage.fr` |
+| `ALLOWED_ORIGIN` dans `lead.php` | `https://reparationhottecuisinenettoyage.fr` |
+| `.htaccess` | variante B active — `www` redirigé vers le domaine nu |
+
+Le `.htaccess` livré force déjà HTTPS, redirige `www` vers la forme nue et
+ajoute le slash final.
+
+**Pour servir le site sur `www` à la place**, il faut inverser les trois : la
+variante A du `.htaccess`, `ALLOWED_ORIGIN`, et `NEXT_PUBLIC_SITE_URL`.
 
 ---
 
@@ -115,7 +130,7 @@ que du serveur web.
 À chaque modification de contenu ou de code :
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://www.votre-domaine-reel.fr npm run check
+NEXT_PUBLIC_SITE_URL=https://reparationhottecuisinenettoyage.fr npm run check
 ```
 
 puis redéposez le contenu de `out/` dans `public_html`.
@@ -135,8 +150,8 @@ npm run preview        # sert out/ sur http://localhost:3000
 
 Ces éléments sont signalés en clair sur le site par un encart « À compléter » :
 
-- `DEST_EMAIL` et `ALLOWED_ORIGIN` dans [`public/api/lead.php`](public/api/lead.php)
-- coordonnées réelles dans [`lib/site.ts`](lib/site.ts)
+- raison sociale et nom commercial dans [`lib/site.ts`](lib/site.ts) — le
+  téléphone et l'e-mail sont renseignés
 - mentions légales et politique de confidentialité
 - fourchettes tarifaires dans [`data/pricing.ts`](data/pricing.ts) — laissées à
   `null`, les pages affichent « sur devis » plutôt qu'un prix inventé

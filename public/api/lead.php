@@ -9,10 +9,10 @@
  * ============================================================================
  *  À FAIRE AVANT MISE EN LIGNE
  * ============================================================================
- *  1. Renseigner DEST_EMAIL ci-dessous avec l'adresse réelle de réception.
- *  2. Renseigner ALLOWED_ORIGIN avec le domaine réel du site.
- *  3. Vérifier que le dossier logs/ est bien hors de public_html, ou que son
- *     accès direct est refusé (voir .htaccess livré à la racine).
+ *  1. DEST_EMAIL et ALLOWED_ORIGIN sont renseignés. Vérifier qu'ALLOWED_ORIGIN
+ *     correspond exactement à la forme servie du domaine (avec ou sans www).
+ *  2. Vérifier que leads.log n'est pas servi publiquement — le .htaccess livré
+ *     à la racine en refuse l'accès.
  *
  *  La fonction mail() de PHP passe souvent en indésirable. Si les demandes
  *  n'arrivent pas, basculer sur le SMTP authentifié de la boîte Hostinger :
@@ -22,8 +22,8 @@
 
 declare(strict_types=1);
 
-const DEST_EMAIL     = 'contact@votre-domaine.fr';   // TODO adresse réelle
-const ALLOWED_ORIGIN = 'https://www.votre-domaine.fr'; // TODO domaine réel
+const DEST_EMAIL     = 'devis@reparationhottecuisinenettoyage.fr';
+const ALLOWED_ORIGIN = 'https://reparationhottecuisinenettoyage.fr';
 const LOG_FILE       = __DIR__ . '/../leads.log';
 const MAX_BODY_BYTES = 20000;
 
