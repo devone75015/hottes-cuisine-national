@@ -19,6 +19,15 @@ const eslintConfig = defineConfig([
       ],
     },
   },
+  {
+    // `server.js` est le point d'entrée Node de l'hébergeur : il tourne hors
+    // du bundle Next, en CommonJS (package.json ne déclare pas "type": "module").
+    // `require()` y est la forme correcte, pas une entorse au style.
+    files: ["server.js"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:

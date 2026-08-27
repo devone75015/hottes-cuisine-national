@@ -13,6 +13,7 @@
  *   5. Similarité inter-pages sous le seuil (5-grammes, indice de Jaccard)
  *   6. Volume de texte minimum sur les pages locales
  *   7. Vocabulaire domestique interdit sur les pages ramonage
+ *   8. Domaine canonique reel (NEXT_PUBLIC_SITE_URL definie au build)
  *
  * Usage :  node scripts/seo-audit.mjs
  * Sortie :  code 1 si un contrôle bloquant échoue.
@@ -200,6 +201,20 @@ for (const p of pages) {
   if (isLocal && words < MIN_WORDS_LOCAL) {
     errors.push(`[page locale trop courte : ${words} mots] ${p.file}`);
   }
+}
+
+/* --- 8 : le domaine canonique doit etre le vrai domaine -------------------- */
+// NEXT_PUBLIC_SITE_URL est inlinee au build. Si elle manquait, toutes les
+// canonical portent le domaine de demonstration : Google indexerait des URL
+// qui n'existent pas. C'est une erreur bloquante, pas un avertissement.
+const PLACEHOLDER_HOST = "hottes-expert-france.fr";
+const onPlaceholder = pages.filter((p) => p.canonical?.includes(PLACEHOLDER_HOST));
+if (onPlaceholder.length) {
+  errors.push(
+    `[domaine de démonstration sur ${onPlaceholder.length} page(s)] ` +
+      `NEXT_PUBLIC_SITE_URL n'était pas définie au moment du build — ` +
+      `les canonical pointent vers ${PLACEHOLDER_HOST}`,
+  );
 }
 
 /* --- 7 : vocabulaire interdit sur les pages ramonage ----------------------- */
