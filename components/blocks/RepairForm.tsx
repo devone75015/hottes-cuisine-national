@@ -122,7 +122,7 @@ export function RepairForm({ defaultCity }: { defaultCity?: string }) {
               : "Nous vous rappelons sous 2 h ouvrées pour qualifier la panne et convenir d'un créneau de diagnostic."}
           </p>
           <a href={`tel:${site.phone.href}`} className="btn btn--block">
-            Appeler le {site.phone.display}
+            Appel direct — {site.phone.display}
           </a>
           <p className={s.note}>
             Photos ou vidéo de la panne :{" "}

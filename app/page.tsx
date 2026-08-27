@@ -81,8 +81,8 @@ export default function HomePage() {
                 </svg>
                 {site.phone.display}
               </a>
-              <Link href="/devis-nettoyage-hotte/" className="btn btn--lg btn--ghost">
-                Devis en 2 minutes
+              <Link href="/devis-nettoyage-hotte/" className="btn btn--lg btn--gray">
+                Demander un devis
               </Link>
             </div>
 

@@ -32,10 +32,10 @@ export function StickyMobileCta() {
             fill="currentColor"
           />
         </svg>
-        Appeler
+        Appel direct
       </a>
       <Link href="/devis-nettoyage-hotte/" className={s.quote}>
-        Devis gratuit
+        Demander un devis
       </Link>
     </div>
   );

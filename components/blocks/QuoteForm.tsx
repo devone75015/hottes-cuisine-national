@@ -137,7 +137,7 @@ export function QuoteForm({
             directement — c&apos;est toujours le plus rapide.
           </p>
           <a href={`tel:${site.phone.href}`} className="btn btn--block">
-            Appeler le {site.phone.display}
+            Appel direct — {site.phone.display}
           </a>
           <p className={s.note}>
             Vous pouvez aussi nous écrire à{" "}

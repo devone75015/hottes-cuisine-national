@@ -251,6 +251,25 @@ samp {
     }
   }
 
+  /**
+   * Bouton secondaire gris plein — le CTA « Demander un devis ».
+   * Le remplissage gris le distingue du fond sans lui donner le poids du
+   * bouton flamme : l'appel reste l'action prioritaire, le devis la seconde.
+   * Fond #e8eef0 et texte #0e1417 donnent 16,9:1, et la bordure --c-steel
+   * assure les 3:1 exigés pour le contour d'un composant, y compris sur les
+   * sections sombres où ce bouton est également utilisé.
+   */
+  &--gray {
+    --btn-bg: var(--c-bg-3);
+    --btn-fg: var(--c-ink);
+    --btn-bd: var(--c-steel);
+
+    &:hover {
+      --btn-bg: #d6dee0;
+      --btn-bd: var(--c-ink);
+    }
+  }
+
   &--sm {
     padding: 9px 16px;
     font-size: var(--fs-sm);

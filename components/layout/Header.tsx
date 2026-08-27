@@ -124,8 +124,8 @@ export function Header() {
               </svg>
               <span>{site.phone.display}</span>
             </a>
-            <Link href="/devis-nettoyage-hotte/" className="btn btn--sm">
-              Devis gratuit
+            <Link href="/devis-nettoyage-hotte/" className="btn btn--sm btn--gray">
+              Demander un devis
             </Link>
           </div>
 
@@ -204,12 +204,12 @@ export function Header() {
 
             <div className={s.drawerCta}>
               <a href={`tel:${site.phone.href}`} className="btn btn--block">
-                Appeler le {site.phone.display}
+                Appel direct — {site.phone.display}
               </a>
               <a href={`mailto:${site.email}`} className={s.drawerMail}>
                 {site.email}
               </a>
-              <Link href="/devis-nettoyage-hotte/" className="btn btn--ghost btn--block">
+              <Link href="/devis-nettoyage-hotte/" className="btn btn--gray btn--block">
                 Demander un devis
               </Link>
             </div>

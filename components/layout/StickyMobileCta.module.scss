@@ -29,24 +29,44 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--s-2);
+  gap: 7px;
   font-family: var(--font-display);
-  font-size: var(--fs-base);
+  font-size: var(--fs-sm);
   font-weight: 700;
-  letter-spacing: -0.01em;
+  // Interlettrage positif, cohérent avec .btn : sur un libellé court et gras,
+  // un tracking négatif resserre les lettres et rend le bouton mou.
+  letter-spacing: 0.015em;
+  text-align: center;
+  line-height: 1.15;
+  padding-inline: 8px;
 
   @include m.focus-ring;
+
+  // Sous 360 px, « Demander un devis » ne tient plus sur une ligne à cette
+  // taille : on descend d'un cran plutôt que de laisser le texte se couper.
+  @include m.down(370px) {
+    font-size: var(--fs-xs);
+    gap: 5px;
+  }
 }
 
 .call {
-  flex: 2;
+  flex: 1;
   background: var(--c-flame);
   color: #fff;
+
+  svg {
+    flex: none;
+  }
 }
 
+/**
+ * Bouton secondaire gris, cohérent avec .btn--gray.
+ * Il est un peu plus large que l'appel : son libellé est plus long.
+ */
 .quote {
-  flex: 1.2;
-  background: var(--c-bg);
+  flex: 1.15;
+  background: var(--c-bg-3);
   color: var(--c-ink);
-  border-left: 1px solid var(--c-line);
+  border-left: 1px solid var(--c-steel);
 }

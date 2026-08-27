@@ -123,7 +123,7 @@ export function CtaBand({
           <a href={`tel:${site.phone.href}`} className="btn btn--lg">
             {site.phone.display}
           </a>
-          <Link href="/devis-nettoyage-hotte/" className="btn btn--lg btn--onDark">
+          <Link href="/devis-nettoyage-hotte/" className="btn btn--lg btn--gray">
             Demander un devis
           </Link>
           <a href={`mailto:${site.email}`} className={s.ctaMail}>
