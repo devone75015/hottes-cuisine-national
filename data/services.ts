@@ -125,7 +125,7 @@ const coreServices: Service[] = [
     slug: "nettoyage-hotte-restaurant",
     pillar: "nettoyage",
     isPillar: false,
-    nav: "Hotte de restaurant",
+    nav: "Nettoyage hotte de restaurant",
     h1: "Nettoyage de hotte de restaurant",
     title: "Nettoyage de hotte de restaurant | Devis sous 24 h",
     description:
@@ -215,7 +215,7 @@ const coreServices: Service[] = [
     slug: "nettoyage-filtres-hotte",
     pillar: "nettoyage",
     isPillar: false,
-    nav: "Filtres de hotte",
+    nav: "Nettoyage filtres de hotte",
     h1: "Nettoyage des filtres de hotte professionnelle",
     title: "Nettoyage filtres de hotte professionnelle | Trempage & remplacement",
     description:
@@ -282,7 +282,7 @@ const coreServices: Service[] = [
     slug: "nettoyage-conduit-hotte",
     pillar: "nettoyage",
     isPillar: false,
-    nav: "Conduit de hotte",
+    nav: "Nettoyage conduit de hotte",
     h1: "Nettoyage de conduit de hotte",
     title: "Nettoyage de conduit de hotte professionnelle | Réseau d'extraction",
     description:
@@ -354,7 +354,7 @@ const coreServices: Service[] = [
     slug: "nettoyage-gaine-extraction",
     pillar: "nettoyage",
     isPillar: false,
-    nav: "Gaine d'extraction",
+    nav: "Nettoyage gaine d'extraction",
     h1: "Nettoyage de gaine d'extraction",
     title: "Nettoyage de gaine d'extraction de cuisine professionnelle",
     description:

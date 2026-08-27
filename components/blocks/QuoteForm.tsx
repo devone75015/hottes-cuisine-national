@@ -70,6 +70,22 @@ export function QuoteForm({
   compact?: boolean;
 }) {
   const pathname = usePathname();
+
+  /**
+   * La page transmet le libellé exact de sa prestation. S'il ne figure pas
+   * dans la liste standard, il faut l'ajouter en tête : un <select> contrôlé
+   * dont la valeur ne correspond à aucune option s'affiche VIDE — le champ
+   * paraissait donc non renseigné sur chaque page prestation, alors même que
+   * le pré-remplissage était le but.
+   *
+   * Le conserver tel quel a un second avantage : le lead porte la prestation
+   * précise de la page d'origine, pas une catégorie approximative.
+   */
+  const serviceOptions =
+    defaultService && !SERVICES.includes(defaultService)
+      ? [defaultService, ...SERVICES]
+      : SERVICES;
+
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
   const [data, setData] = useState<LeadPayload>({
     ...initial,
@@ -157,7 +173,7 @@ export function QuoteForm({
               value={data.service}
               onChange={(e) => set("service", e.target.value)}
             >
-              {SERVICES.map((v) => (
+              {serviceOptions.map((v) => (
                 <option key={v}>{v}</option>
               ))}
             </select>

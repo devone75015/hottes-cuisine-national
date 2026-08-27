@@ -249,7 +249,7 @@ export const repairServices: Service[] = [
     slug: "remplacement-courroie-hotte-professionnelle",
     pillar: "reparation",
     isPillar: false,
-    nav: "Courroie",
+    nav: "Réparation et changement courroie",
     h1: "Remplacement de courroie de hotte professionnelle",
     title: "Remplacement de courroie de hotte professionnelle | Extracteur",
     description:
@@ -345,7 +345,7 @@ export const repairServices: Service[] = [
     slug: "reparation-moteur-hotte-professionnelle",
     pillar: "reparation",
     isPillar: false,
-    nav: "Moteur",
+    nav: "Réparation et changement moteur",
     h1: "Réparation de moteur de hotte professionnelle",
     title: "Réparation de moteur de hotte professionnelle | Diagnostic moteur",
     description:

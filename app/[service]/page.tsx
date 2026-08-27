@@ -130,7 +130,7 @@ export default async function ServicePage({ params }: PageProps<"/[service]">) {
       </PageBody>
 
       <CtaBand
-        title={`Un devis pour votre ${sv.nav.toLowerCase()}`}
+        title={`${sv.h1} : demandez votre devis`}
         text="Quelques minutes au téléphone suffisent à cerner votre installation. Vous recevez un chiffrage détaillé, poste par poste, sous 24 heures."
       />
     </>
