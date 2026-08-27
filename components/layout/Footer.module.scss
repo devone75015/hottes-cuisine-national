@@ -5,7 +5,9 @@
   background: var(--c-dark);
   color: var(--c-on-dark-2);
   margin-top: auto;
-  padding-bottom: var(--h-mobile-cta);
+  // Réserve la place de la barre fixe, zone sûre comprise — sinon le dernier
+  // bloc du footer passe sous la barre sur les iPhone à encoche.
+  padding-bottom: calc(var(--h-mobile-cta) + env(safe-area-inset-bottom, 0px));
 
   @include m.up(t.$bp-md) {
     padding-bottom: 0;

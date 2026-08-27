@@ -8,12 +8,26 @@
   bottom: 0;
   z-index: 55;
   display: flex;
-  height: var(--h-mobile-cta);
   border-top: 1px solid var(--c-line);
   background: var(--c-bg);
   transform: translateY(100%);
   transition: transform t.$t-base t.$ease;
-  padding-bottom: env(safe-area-inset-bottom);
+
+  /**
+   * La hauteur INTÉGRE la zone sûre au lieu de la subir.
+   *
+   * Avant : `height: var(--h-mobile-cta)` + `padding-bottom: env(...)`. Avec
+   * box-sizing: border-box, ce padding mangeait la hauteur fixe. Or sur iOS
+   * Safari, safe-area-inset-bottom change de valeur quand la barre d'URL se
+   * rétracte au scroll : les boutons étaient écrasés puis rétablis pendant le
+   * défilement.
+   *
+   * En ajoutant l'inset à la hauteur, la zone utile reste exactement
+   * --h-mobile-cta quelle que soit la valeur de l'inset. Les boutons ne
+   * bougent plus.
+   */
+  height: calc(var(--h-mobile-cta) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 
   &[data-shown] {
     transform: none;
@@ -52,6 +66,7 @@
 
 .call {
   flex: 1;
+  height: var(--h-mobile-cta);
   background: var(--c-flame);
   color: #fff;
 
@@ -66,6 +81,7 @@
  */
 .quote {
   flex: 1.15;
+  height: var(--h-mobile-cta);
   background: var(--c-bg-3);
   color: var(--c-ink);
   border-left: 1px solid var(--c-steel);
