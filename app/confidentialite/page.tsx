@@ -84,9 +84,25 @@ export default function PrivacyPage() {
 
           <h2>Mesure d&apos;audience et cookies</h2>
           <p>
-            Aucun cookie de mesure d&apos;audience ou de publicité n&apos;est déposé sans votre consentement.
-            La liste des traceurs utilisés et le mécanisme de recueil du consentement seront
-            renseignés lors de la mise en place des outils de mesure.
+            Ce site charge <strong>Google Tag Manager</strong> (conteneur{" "}
+            {site.gtmId}), un gestionnaire de balises édité par Google. Il permet de
+            déclencher des outils de mesure d&apos;audience et de suivi publicitaire sans
+            modifier le code du site.
+          </p>
+          <p>
+            La liste exacte des balises actives dans ce conteneur, les cookies qu&apos;elles
+            déposent, leur durée de conservation et les destinataires des données sont à
+            renseigner ici en fonction de la configuration retenue dans Google Tag Manager.{" "}
+            <span className={p.todo}>À compléter</span>
+          </p>
+          <p>
+            <strong>Recueil du consentement</strong> : aucun mécanisme de recueil du
+            consentement n&apos;est actuellement installé sur ce site. Tant qu&apos;il ne
+            l&apos;est pas, le conteneur se charge dès l&apos;ouverture de la page. Si les
+            balises qu&apos;il contient déposent des cookies de mesure d&apos;audience ou de
+            publicité, un bandeau de consentement conforme aux exigences de la CNIL doit
+            être mis en place avant l&apos;ouverture du site au public.{" "}
+            <span className={p.todo}>À compléter</span>
           </p>
         </div>
       </PageNarrow>

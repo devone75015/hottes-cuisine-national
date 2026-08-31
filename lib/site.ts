@@ -51,6 +51,15 @@ export const site = {
     { value: "RC Pro", label: "assurance professionnelle" },
   ],
 
+  /**
+   * Google Tag Manager.
+   *
+   * Le conteneur est injecté dans le <head> au build. Pour un environnement
+   * de préproduction où l'on ne veut pas polluer les statistiques, définir
+   * NEXT_PUBLIC_GTM_ID à une chaîne vide : le conteneur n'est alors pas posé.
+   */
+  gtmId: process.env.NEXT_PUBLIC_GTM_ID ?? "GTM-MBDMJ6C3",
+
   social: {} as Record<string, string>,
 } as const;
 
