@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useState, useTransition } from "react";
 import { submitLead, type LeadPayload } from "@/lib/lead";
+import { analytics } from "@/lib/analytics";
 import { site } from "@/lib/site";
 import s from "./QuoteForm.module.scss";
 import r from "./RepairForm.module.scss";
@@ -96,6 +97,15 @@ export function RepairForm({ defaultCity }: { defaultCity?: string }) {
     start(async () => {
       const res = await submitLead({ ...data, stage: "partial", source: pathname });
       if (!res.ok) return setError(res.error ?? "Une erreur est survenue.");
+      analytics.formStep1("repair", {
+        // `state` distingue une cuisine à l'arrêt d'un simple signe
+        // avant-coureur : c'est la donnée qui permet de valoriser
+        // différemment les conversions dans Google Ads.
+        state: data.state,
+        symptoms: data.symptoms?.join(", "),
+        city: data.city,
+        from: pathname,
+      });
       setStep(2);
     });
   }
@@ -106,6 +116,14 @@ export function RepairForm({ defaultCity }: { defaultCity?: string }) {
     start(async () => {
       const res = await submitLead({ ...data, stage: "complete", source: pathname });
       if (!res.ok) return setError(res.error ?? "Une erreur est survenue.");
+      analytics.formSubmit("repair", {
+        state: data.state,
+        symptoms: data.symptoms?.join(", "),
+        city: data.city,
+        establishment: data.establishment,
+        urgency: data.urgency,
+        from: pathname,
+      });
       setStep(4);
     });
   }

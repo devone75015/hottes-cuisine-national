@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useState, useTransition } from "react";
 import { submitLead, type LeadPayload } from "@/lib/lead";
+import { analytics } from "@/lib/analytics";
 import { site } from "@/lib/site";
 import s from "./QuoteForm.module.scss";
 
@@ -109,6 +110,12 @@ export function QuoteForm({
         setError(res.error ?? "Une erreur est survenue.");
         return;
       }
+      analytics.formStep1("quote", {
+        service: data.service,
+        city: data.city,
+        establishment: data.establishment,
+        from: pathname,
+      });
       setStep(2);
     });
   }
@@ -122,6 +129,13 @@ export function QuoteForm({
         setError(res.error ?? "Une erreur est survenue.");
         return;
       }
+      analytics.formSubmit("quote", {
+        service: data.service,
+        city: data.city,
+        establishment: data.establishment,
+        urgency: data.urgency,
+        from: pathname,
+      });
       setStep(4);
     });
   }

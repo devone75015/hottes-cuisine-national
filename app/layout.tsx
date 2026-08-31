@@ -4,6 +4,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyMobileCta } from "@/components/layout/StickyMobileCta";
 import { JsonLd } from "@/components/ui/JsonLd";
+import { TrackEvents } from "@/components/analytics/TrackEvents";
 import { organizationJsonLd } from "@/lib/seo";
 import { site } from "@/lib/site";
 import "./globals.scss";
@@ -103,6 +104,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <main id="contenu">{children}</main>
         <Footer />
         <StickyMobileCta />
+        <TrackEvents />
       </body>
     </html>
   );

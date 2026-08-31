@@ -81,6 +81,23 @@ coûteux se cachent.
 - [ ] Interrompre volontairement après l'étape 1 : le lead partiel doit être
       enregistré, c'est ce qui rend le prospect rappelable
 
+### Mesure et conversions
+
+À vérifier dans **l'aperçu de Google Tag Manager**, site déployé :
+
+- [ ] Le conteneur se charge — événement `gtm.js` visible
+- [ ] `tel_click` part au clic sur un numéro, depuis l'en-tête, la barre fixe
+      mobile, le pied de page et les bandeaux
+- [ ] `devis_click` part au clic sur un bouton « Demander un devis »
+- [ ] `form_step_1` part à la validation de la première étape — c'est la
+      conversion la plus importante à suivre : le lead est déjà rappelable
+- [ ] `form_submit` part à l'envoi complet
+- [ ] Sur le formulaire de dépannage, le paramètre `state` distingue bien une
+      cuisine à l'arrêt d'un signe avant-coureur — c'est ce qui permet de
+      valoriser différemment les conversions dans Google Ads
+- [ ] Les conversions sont importées dans Google Ads et marquées comme
+      principales
+
 ### Technique, une fois déployé
 
 - [ ] HTTPS actif, certificat valide
@@ -105,7 +122,8 @@ s'appliquent pas à ce site, et il vaut mieux le dire que cocher des cases vides
 | Pages départements | **Non produites** — prévues en vague 3 du cadrage. Les 13 régions existent. |
 | Photos métier (débouchage, toiture, TCE) | **Sans objet** — le métier est la hotte professionnelle. Les 90 visuels sont cohérents avec leur page, mais ce sont des **illustrations**, pas vos interventions. |
 | Protection anti-spam | **Partielle** — `lead.php` valide, limite la taille et contrôle l'origine. Aucun captcha : à ajouter si le volume de spam le justifie. |
-| Tracking Analytics / Ads | **Non installé** — aucun code de mesure n'est présent. |
+| Tracking Analytics / Ads | **Conteneur GTM posé** (`GTM-MBDMJ6C3`) et quatre événements de conversion poussés dans le `dataLayer`. Les balises restent à configurer dans GTM. |
+| Bandeau de consentement | **Non installé** — bloquant si les balises du conteneur déposent des cookies de mesure ou de publicité. |
 
 ---
 
