@@ -33,6 +33,11 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# Exception : le gabarit ne contient aucun secret, seulement la liste des
+# variables attendues et ce qui casse quand elles manquent. L'ignorer revenait
+# a garder cette documentation sur une seule machine.
+!.env.example
+
 # vercel
 .vercel
 
