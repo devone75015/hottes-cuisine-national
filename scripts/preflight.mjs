@@ -4,7 +4,7 @@
  *
  * Complète scripts/seo-audit.mjs, qui se concentre sur le duplicate et la
  * sémantique. Ce script-ci vérifie l'intégrité de ce qui part réellement en
- * production : liens, images, CTA, sitemap, textes temporaires, poids.
+ * production : liens, images, CTA, sitemap, textes temporaires, balises de mesure, poids.
  *
  * Il tourne sur out/, c'est-à-dire sur les fichiers qui seront déposés — pas
  * sur le code source. Ce qui n'est pas dans out/ n'existe pas.
@@ -256,13 +256,72 @@ for (const route of ["devis-nettoyage-hotte/", "contact/", "/"]) {
   }
 }
 
-/* --- 9. Hiérarchie de titres ---------------------------------------------- */
+/* --- 9. Balises de mesure ------------------------------------------------- *
+ * Les deux balises Google sont posées dans le <head> par app/layout.tsx. Rien
+ * n'empêche une refonte du layout de les faire disparaître sans bruit : un
+ * site qui ne mesure plus se construit et se déploie exactement pareil, et on
+ * ne s'en aperçoit que des semaines plus tard, en constatant qu'aucune
+ * conversion ne remonte dans Google Ads. D'où ce contrôle bloquant.
+ *
+ * Les identifiants sont relus dans lib/site.ts plutôt que recopiés ici : un
+ * contrôle qui vérifie sa propre copie d'une valeur ne vérifie rien.
+ *
+ * Ce qui est contrôlé n'est PAS la position exacte des balises. React remonte
+ * les scripts externes en tête du <head> — gtag.js s'y retrouve avant le
+ * conteneur GTM, c'est sans effet puisqu'il est `async` et que les deux blocs
+ * d'initialisation, eux, restent dans l'ordre. Ce qui est contrôlé : présence,
+ * unicité, ordre d'initialisation, et intégrité du dataLayer partagé.
+ */
+{
+  const siteSrc = await readFile("lib/site.ts", "utf8");
+  const idOf = (key) => (siteSrc.match(new RegExp(`${key}:[^"\n]*"([^"]*)"`)) || [, ""])[1];
+  const gtmId = idOf("gtmId");
+  const adsId = idOf("googleAdsId");
+
+  if (!gtmId) errors.push("[identifiant GTM introuvable dans lib/site.ts]");
+  if (!adsId) errors.push("[identifiant Google Ads introuvable dans lib/site.ts]");
+
+  for (const p of pages) {
+    const head = p.html.slice(0, p.html.indexOf("</head>"));
+    const body = p.html.slice(p.html.indexOf("<body"));
+
+    const iGtm = gtmId ? head.indexOf(`'${gtmId}'`) : -1;
+    if (gtmId && iGtm < 0) errors.push(`[conteneur GTM absent du <head>] ${p.route}`);
+    if (gtmId && !body.includes(`ns.html?id=${gtmId}`)) {
+      errors.push(`[repli noscript GTM absent du <body>] ${p.route}`);
+    }
+
+    // Le chargeur externe : présent une fois et une seule. Deux exemplaires
+    // font compter chaque conversion deux fois, et rien ne le signale.
+    const loaders = [...head.matchAll(/<script[^>]+gtag\/js\?id=([\w-]+)/g)].map((m) => m[1]);
+    if (adsId && !loaders.includes(adsId)) {
+      errors.push(`[gtag.js ${adsId} absent du <head>] ${p.route}`);
+    }
+    if (loaders.length > 1) {
+      errors.push(`[gtag.js chargé ${loaders.length} fois] ${p.route}`);
+    }
+
+    const iCfg = adsId ? head.indexOf(`gtag('config','${adsId}')`) : -1;
+    if (adsId && iCfg < 0) errors.push(`[config Google Ads ${adsId} absente] ${p.route}`);
+    else if (iCfg >= 0 && iGtm >= 0 && iCfg < iGtm) {
+      errors.push(`[gtag s'initialise avant le conteneur GTM] ${p.route}`);
+    }
+
+    // GTM et gtag écrivent dans le même dataLayer. Une réassignation sèche
+    // vide la file de l'autre : c'est la panne silencieuse classique.
+    if (/dataLayer\s*=\s*\[/.test(head)) {
+      errors.push(`[dataLayer réinitialisé au lieu d'être réutilisé] ${p.route}`);
+    }
+  }
+}
+
+/* --- 10. Hiérarchie de titres ---------------------------------------------- */
 for (const p of pages) {
   const h2 = [...p.html.matchAll(/<h2[^>]*>/g)].length;
   if (h2 === 0) warnings.push(`[aucun H2] ${p.route}`);
 }
 
-/* --- 10. Poids ------------------------------------------------------------ *
+/* --- 11. Poids ------------------------------------------------------------ *
  * Le total des chunks présents dans out/ ne veut rien dire : un visiteur n'en
  * télécharge qu'une fraction. Ce qui compte est le JS réellement référencé par
  * une page — c'est ce qu'on mesure ici, page par page.

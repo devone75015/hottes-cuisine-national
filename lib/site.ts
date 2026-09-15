@@ -52,13 +52,22 @@ export const site = {
   ],
 
   /**
-   * Google Tag Manager.
-   *
-   * Le conteneur est injecté dans le <head> au build. Pour un environnement
-   * de préproduction où l'on ne veut pas polluer les statistiques, définir
-   * NEXT_PUBLIC_GTM_ID à une chaîne vide : le conteneur n'est alors pas posé.
-   */
+    * Google Tag Manager.
+    *
+    * Le conteneur est injecté dans le <head> au build. Pour un environnement
+    * de préproduction où l'on ne veut pas polluer les statistiques, définir
+    * NEXT_PUBLIC_GTM_ID à une chaîne vide : le conteneur n'est alors pas posé.
+    */
   gtmId: process.env.NEXT_PUBLIC_GTM_ID ?? "GTM-MBDMJ6C3",
+
+  /**
+    * Google Ads (gtag.js).
+    *
+    * Tag AW-18208756397 posé via gtag.js, en coexistence avec GTM (même
+    * dataLayer). Définir NEXT_PUBLIC_GOOGLE_ADS_ID à une chaîne vide pour
+    * désactiver le tag sur un environnement de préproduction.
+    */
+  googleAdsId: process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ?? "AW-18208756397",
 
   social: {} as Record<string, string>,
 } as const;
