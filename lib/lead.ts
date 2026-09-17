@@ -54,16 +54,38 @@ export interface LeadResult {
 }
 
 /**
- * Point de réception des demandes.
+ * Point de réception principal — celui qui fait foi.
  *
  * Par défaut `/api/lead.php`, livré dans `public/api/` et donc présent dans
  * `out/api/lead.php` après le build — il fonctionne tel quel sur un
- * hébergement mutualisé Hostinger, qui exécute PHP.
+ * hébergement mutualisé Hostinger, qui exécute PHP. C'est lui qui valide,
+ * enregistre dans `leads.log` et envoie le courriel.
  *
  * Pour utiliser un service tiers (Formspree, Brevo, Web3Forms…), définir
  * NEXT_PUBLIC_FORM_ENDPOINT au build avec l'URL complète.
  */
 const ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT || "/api/lead.php";
+
+/**
+ * Miroir n8n — une copie, pas un remplacement.
+ *
+ * Le workflow n8n reçoit chaque demande déjà acceptée par le point de
+ * réception principal. Le choix du miroir plutôt que de la substitution est
+ * délibéré : un lead de restaurateur ne se rejoue pas. Si le workflow est
+ * arrêté, mal configuré côté CORS, ou si le serveur n8n est indisponible, la
+ * demande est malgré tout enregistrée et envoyée par courriel. L'inverse —
+ * n8n seul — ferait disparaître des demandes sans que rien ne le signale.
+ *
+ * ⚠ Cette URL est inlinée dans le JavaScript public : elle est lisible par
+ *   n'importe qui, et donc postable par n'importe qui. Aucun en-tête secret
+ *   n'y changerait rien, il serait tout aussi lisible. La protection doit
+ *   vivre dans le workflow : dédoublonnage et contrôle des champs.
+ *
+ * Mettre NEXT_PUBLIC_LEAD_WEBHOOK à une chaîne vide désactive le miroir.
+ */
+const WEBHOOK =
+  process.env.NEXT_PUBLIC_LEAD_WEBHOOK ??
+  "https://n8n.srv1688718.hstgr.cloud/webhook/lead-capture";
 
 const PHONE_RE = /^(?:\+33|0)\s?[1-9](?:[\s.-]?\d{2}){4}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -86,20 +108,52 @@ function validate(payload: LeadPayload): string | null {
   return null;
 }
 
+/**
+ * Recopie la demande vers n8n, sans jamais faire attendre le visiteur ni
+ * risquer de lui montrer une erreur : sa demande est déjà enregistrée.
+ *
+ * `keepalive` garantit que la requête part même si l'onglet se ferme dans la
+ * seconde qui suit. L'échec est silencieux pour le visiteur, bruyant en
+ * console : c'est là qu'on ira voir si les leads n'arrivent pas dans n8n.
+ */
+function mirrorToWebhook(body: string): void {
+  if (!WEBHOOK) return;
+
+  fetch(WEBHOOK, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body,
+    keepalive: true,
+  })
+    .then((res) => {
+      if (!res.ok) {
+        console.warn(`[lead] miroir n8n : réponse ${res.status}`);
+      }
+    })
+    .catch(() => {
+      console.warn(
+        "[lead] miroir n8n injoignable — vérifier « Allowed Origins (CORS) » " +
+          "sur le nœud Webhook, qui doit autoriser le domaine du site.",
+      );
+    });
+}
+
 export async function submitLead(payload: LeadPayload): Promise<LeadResult> {
   const invalid = validate(payload);
   if (invalid) return { ok: false, error: invalid };
+
+  const body = JSON.stringify({
+    ...payload,
+    // Horodatage côté client, à titre indicatif seulement : le point de
+    // réception doit reposer sur sa propre horloge.
+    submittedAt: new Date().toISOString(),
+  });
 
   try {
     const res = await fetch(ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...payload,
-        // Horodatage côté client, à titre indicatif seulement : le point de
-        // réception doit reposer sur sa propre horloge.
-        submittedAt: new Date().toISOString(),
-      }),
+      body,
     });
 
     if (!res.ok) {
@@ -109,6 +163,11 @@ export async function submitLead(payload: LeadPayload): Promise<LeadResult> {
           "Votre demande n'a pas pu être transmise. Appelez-nous directement, c'est le plus rapide.",
       };
     }
+
+    // Le lead est accepté : on en envoie une copie à n8n. Volontairement après
+    // coup et sans `await` — le miroir ne doit ni ralentir la confirmation, ni
+    // recevoir des demandes que le point de réception a refusées.
+    mirrorToWebhook(body);
 
     return { ok: true };
   } catch {

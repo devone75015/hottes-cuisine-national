@@ -79,6 +79,14 @@ coûteux se cachent.
 - [ ] **Vérifier qu'un lead de test arrive réellement** dans la boîte
       `devis@reparationhottecuisinenettoyage.fr`
 - [ ] Vérifier qu'il apparaît aussi dans `leads.log`
+- [ ] **Vérifier que le lead de test arrive aussi dans n8n.** S'il manque,
+      ouvrir la console du navigateur : le message `[lead] miroir n8n` dit
+      si c'est le CORS ou le workflow. Le nœud Webhook doit autoriser
+      `https://reparationhottecuisinenettoyage.fr` dans « Allowed Origins (CORS) ».
+- [ ] Vérifier que n8n **dédoublonne** : chaque demande arrive deux fois,
+      une fois à l'étape 1 (`stage: partial`) et une fois à l'envoi complet
+      (`stage: complete`). C'est voulu — le lead partiel est rappelable —
+      mais cela fait deux entrées pour un seul prospect.
 - [ ] Interrompre volontairement après l'étape 1 : le lead partiel doit être
       enregistré, c'est ce qui rend le prospect rappelable
 
@@ -133,7 +141,7 @@ s'appliquent pas à ce site, et il vaut mieux le dire que cocher des cases vides
 
 | Point du prompt | Statut ici |
 |---|---|
-| Webhook n8n de production | **Sans objet** — le formulaire poste vers `api/lead.php`, pas vers n8n. Si n8n doit être branché, il suffit de définir `NEXT_PUBLIC_FORM_ENDPOINT`. |
+| Webhook n8n de production | **Branché en miroir.** Le formulaire poste vers `api/lead.php` — qui valide, journalise et envoie le courriel — puis recopie la demande vers `n8n.srv1688718.hstgr.cloud/webhook/lead-capture`. Le miroir ne peut pas faire échouer une demande : si n8n est indisponible, le lead est quand même enregistré. |
 | Page « Merci » et redirection | **Sans objet** — le formulaire confirme sur place, sans changement de page. C'est délibéré : une redirection perd le contexte et casse le suivi de conversion sur un site statique. |
 | Prise de rendez-vous en ligne | **Non prévu** — le parcours va vers l'appel et le devis. |
 | Pages départements | **Non produites** — prévues en vague 3 du cadrage. Les 13 régions existent. |
