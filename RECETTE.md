@@ -43,7 +43,7 @@ qui bloque.
 | 17 | `robots.txt` ne bloque pas le site |
 | 18 | `404.html`, `.htaccess`, `api/lead.php` présents dans `out/` |
 | 19 | Formulaire présent sur accueil, devis et contact |
-| 20 | Balises de mesure : GTM et Google Ads présents sur chaque page, chargés une seule fois, `dataLayer` jamais réinitialisé |
+| 20 | Balises de mesure : GTM, Google Ads et GA4 présents sur chaque page, gtag.js chargé une seule fois, `dataLayer` jamais réinitialisé |
 | 21 | Aucun asset référencé introuvable |
 | 22 | Poids transféré de la page la plus lourde sous 400 Ko |
 
@@ -92,12 +92,13 @@ coûteux se cachent.
 
 ### Mesure et conversions
 
-Deux balises Google cohabitent sur la même file `dataLayer` :
+Trois balises Google cohabitent sur la même file `dataLayer` :
 
 | Balise | Identifiant | Rôle |
 |---|---|---|
 | Google Tag Manager | `GTM-MBDMJ6C3` | conteneur — c'est là que se configurent les balises |
 | Google Ads (gtag.js) | `AW-18208756397` | remarketing et conversions Ads, en direct |
+| Google Analytics 4 (gtag.js) | `G-YZNPNR36Q0` | mesure d'audience — partage le chargeur gtag.js d'Ads |
 
 ⚠ **Risque de double comptage.** Si une conversion Ads est configurée à la fois
 dans le conteneur GTM *et* via le tag gtag.js direct, elle est comptée deux
@@ -110,6 +111,10 @@ site déployé :
 
 - [ ] Le conteneur GTM se charge — événement `gtm.js` visible
 - [ ] Le tag `AW-18208756397` se déclenche — visible dans Tag Assistant
+- [ ] Le tag `G-YZNPNR36Q0` se déclenche — une visite apparaît dans le rapport
+      « Temps réel » de Google Analytics
+- [ ] GA4 n'est **pas aussi** configuré dans le conteneur GTM : sinon chaque
+      page vue est comptée deux fois
 - [ ] Une conversion de test n'est comptée **qu'une seule fois** dans Google Ads
 - [ ] `tel_click` part au clic sur un numéro, depuis l'en-tête, la barre fixe
       mobile, le pied de page et les bandeaux
@@ -147,7 +152,7 @@ s'appliquent pas à ce site, et il vaut mieux le dire que cocher des cases vides
 | Pages départements | **Non produites** — prévues en vague 3 du cadrage. Les 13 régions existent. |
 | Photos métier (débouchage, toiture, TCE) | **Sans objet** — le métier est la hotte professionnelle. Les 90 visuels sont cohérents avec leur page, mais ce sont des **illustrations**, pas vos interventions. |
 | Protection anti-spam | **Partielle** — `lead.php` valide, limite la taille et contrôle l'origine. Aucun captcha : à ajouter si le volume de spam le justifie. |
-| Tracking Analytics / Ads | **Conteneur GTM posé** (`GTM-MBDMJ6C3`), **tag Google Ads posé** (`AW-18208756397`) et quatre événements de conversion poussés dans le `dataLayer`. Les actions de conversion restent à créer dans Google Ads — voir l'avertissement sur le double comptage plus haut. |
+| Tracking Analytics / Ads | **Conteneur GTM posé** (`GTM-MBDMJ6C3`), **tags Google Ads** (`AW-18208756397`) **et GA4** (`G-YZNPNR36Q0`) **posés** et quatre événements de conversion poussés dans le `dataLayer`. Les actions de conversion restent à créer dans Google Ads — voir l'avertissement sur le double comptage plus haut. |
 | Bandeau de consentement | **Non installé** — bloquant si les balises du conteneur déposent des cookies de mesure ou de publicité. |
 
 ---

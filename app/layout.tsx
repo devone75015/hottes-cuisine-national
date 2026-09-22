@@ -45,6 +45,9 @@ export const metadata: Metadata = {
   formatDetection: { telephone: true },
 };
 
+/** Destinations gtag.js actives — un identifiant vide est simplement ignoré. */
+const gtagIds = [site.googleAdsId, site.analyticsId].filter(Boolean);
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -80,14 +83,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }}
           />
         )}
-        {/* Google Ads — gtag.js AW-18208756397, coexiste avec GTM sur le même dataLayer */}
-        {site.googleAdsId && (
+        {/*
+          Google Ads (AW-18208756397) et Google Analytics 4 (G-YZNPNR36Q0).
+
+          Un seul chargeur gtag.js, puis un `config` par destination : c'est la
+          méthode que Google documente pour plusieurs identifiants. Coller deux
+          snippets complets chargerait la bibliothèque deux fois et enverrait
+          deux `gtag('js')`. Le dataLayer est partagé avec GTM, jamais réinitialisé.
+        */}
+        {gtagIds.length > 0 && (
           <>
-            <script async src={`https://www.googletagmanager.com/gtag/js?id=${site.googleAdsId}`} />
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${gtagIds[0]}`} />
             <script
-              id="google-ads-init"
+              id="gtag-init"
               dangerouslySetInnerHTML={{
-                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${site.googleAdsId}');`,
+                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());${gtagIds
+                  .map((id) => `gtag('config','${id}');`)
+                  .join("")}`,
               }}
             />
           </>

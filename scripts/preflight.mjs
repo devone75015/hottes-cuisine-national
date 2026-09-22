@@ -277,9 +277,12 @@ for (const route of ["devis-nettoyage-hotte/", "contact/", "/"]) {
   const idOf = (key) => (siteSrc.match(new RegExp(`${key}:[^"\n]*"([^"]*)"`)) || [, ""])[1];
   const gtmId = idOf("gtmId");
   const adsId = idOf("googleAdsId");
+  const gaId = idOf("analyticsId");
+  const gtagIds = [adsId, gaId].filter(Boolean);
 
   if (!gtmId) errors.push("[identifiant GTM introuvable dans lib/site.ts]");
   if (!adsId) errors.push("[identifiant Google Ads introuvable dans lib/site.ts]");
+  if (!gaId) errors.push("[identifiant Google Analytics introuvable dans lib/site.ts]");
 
   for (const p of pages) {
     const head = p.html.slice(0, p.html.indexOf("</head>"));
@@ -294,17 +297,20 @@ for (const route of ["devis-nettoyage-hotte/", "contact/", "/"]) {
     // Le chargeur externe : présent une fois et une seule. Deux exemplaires
     // font compter chaque conversion deux fois, et rien ne le signale.
     const loaders = [...head.matchAll(/<script[^>]+gtag\/js\?id=([\w-]+)/g)].map((m) => m[1]);
-    if (adsId && !loaders.includes(adsId)) {
-      errors.push(`[gtag.js ${adsId} absent du <head>] ${p.route}`);
+    if (gtagIds.length && !gtagIds.some((id) => loaders.includes(id))) {
+      errors.push(`[chargeur gtag.js absent du <head>] ${p.route}`);
     }
     if (loaders.length > 1) {
       errors.push(`[gtag.js chargé ${loaders.length} fois] ${p.route}`);
     }
 
-    const iCfg = adsId ? head.indexOf(`gtag('config','${adsId}')`) : -1;
-    if (adsId && iCfg < 0) errors.push(`[config Google Ads ${adsId} absente] ${p.route}`);
-    else if (iCfg >= 0 && iGtm >= 0 && iCfg < iGtm) {
-      errors.push(`[gtag s'initialise avant le conteneur GTM] ${p.route}`);
+    // Une destination par identifiant : Google Ads ET Google Analytics 4.
+    for (const id of gtagIds) {
+      const iCfg = head.indexOf(`gtag('config','${id}')`);
+      if (iCfg < 0) errors.push(`[config gtag ${id} absente] ${p.route}`);
+      else if (iGtm >= 0 && iCfg < iGtm) {
+        errors.push(`[gtag s'initialise avant le conteneur GTM] ${p.route}`);
+      }
     }
 
     // GTM et gtag écrivent dans le même dataLayer. Une réassignation sèche

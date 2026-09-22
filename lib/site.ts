@@ -69,6 +69,16 @@ export const site = {
     */
   googleAdsId: process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ?? "AW-18208756397",
 
+  /**
+    * Google Analytics 4 (gtag.js).
+    *
+    * Partage le chargeur gtag.js du tag Google Ads : Google recommande un seul
+    * chargeur et un `config` par destination, plutôt que deux snippets complets
+    * qui chargeraient la bibliothèque deux fois. Définir NEXT_PUBLIC_GA_ID à une
+    * chaîne vide pour désactiver le tag sur un environnement de préproduction.
+    */
+  analyticsId: process.env.NEXT_PUBLIC_GA_ID ?? "G-YZNPNR36Q0",
+
   social: {} as Record<string, string>,
 } as const;
 

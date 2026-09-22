@@ -83,25 +83,39 @@ export default function PrivacyPage() {
           </p>
 
           <h2>Mesure d&apos;audience et cookies</h2>
+          <p>Ce site charge trois outils édités par Google :</p>
+          <ul>
+            <li>
+              <strong>Google Tag Manager</strong> (conteneur {site.gtmId}) — un gestionnaire
+              de balises, qui permet de déclencher des outils de mesure sans modifier le code
+              du site ;
+            </li>
+            <li>
+              <strong>Google Analytics 4</strong> ({site.analyticsId}) — mesure
+              d&apos;audience : pages consultées, provenance des visites, parcours sur le
+              site. Il dépose notamment les cookies <code>_ga</code> et{" "}
+              <code>_ga_*</code> ;
+            </li>
+            <li>
+              <strong>Google Ads</strong> ({site.googleAdsId}) — mesure de l&apos;efficacité
+              des annonces publicitaires : il permet de savoir si une demande de devis ou un
+              appel fait suite à un clic sur une annonce. Il dépose notamment le cookie{" "}
+              <code>_gcl_au</code>.
+            </li>
+          </ul>
           <p>
-            Ce site charge <strong>Google Tag Manager</strong> (conteneur{" "}
-            {site.gtmId}), un gestionnaire de balises édité par Google. Il permet de
-            déclencher des outils de mesure d&apos;audience et de suivi publicitaire sans
-            modifier le code du site.
-          </p>
-          <p>
-            La liste exacte des balises actives dans ce conteneur, les cookies qu&apos;elles
-            déposent, leur durée de conservation et les destinataires des données sont à
-            renseigner ici en fonction de la configuration retenue dans Google Tag Manager.{" "}
+            La durée de conservation de ces cookies, celle des données dans les outils
+            Google, et la liste des éventuelles autres balises actives dans le conteneur
+            sont à renseigner ici.{" "}
             <span className={p.todo}>À compléter</span>
           </p>
           <p>
             <strong>Recueil du consentement</strong> : aucun mécanisme de recueil du
-            consentement n&apos;est actuellement installé sur ce site. Tant qu&apos;il ne
-            l&apos;est pas, le conteneur se charge dès l&apos;ouverture de la page. Si les
-            balises qu&apos;il contient déposent des cookies de mesure d&apos;audience ou de
-            publicité, un bandeau de consentement conforme aux exigences de la CNIL doit
-            être mis en place avant l&apos;ouverture du site au public.{" "}
+            consentement n&apos;est actuellement installé sur ce site. Ces outils se
+            chargent donc dès l&apos;ouverture de la page. Les cookies de mesure
+            d&apos;audience et de publicité ci-dessus nécessitent, selon les exigences de
+            la CNIL, un bandeau de consentement qui doit être mis en place avant
+            l&apos;ouverture du site au public.{" "}
             <span className={p.todo}>À compléter</span>
           </p>
         </div>
